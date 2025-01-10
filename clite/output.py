@@ -1,21 +1,28 @@
 import sys
 
-from typing import IO, Any
+from typing import IO, Any, TextIO, Optional
+
+
+def _make_file_stdout() -> TextIO:
+    return sys.stdout
+
+
+def _make_file_stderr() -> TextIO:
+    return sys.stderr
 
 
 def echo(
     message: str,
-    file: IO[Any] | None = None,
     is_err: bool = False,
     is_new_line: bool = True,
 ) -> None:
-    if file is None:
-        if is_err:
-            file = sys.stderr
-        else:
-            file = sys.stdout
+    file = None
+    if is_err:
+        file = _make_file_stderr()
+    else:
+        file = _make_file_stdout()
     if is_new_line:
         message += "\n"
-    print("test echo")
+    message = message.strip()
     file.write(message)
     file.flush()

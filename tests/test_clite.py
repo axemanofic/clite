@@ -13,8 +13,7 @@ def test_basic_functionality(runner: "CliRunner"):
     @app.command()
     def test_command():
         echo("test echo")
-        return 1
 
     result = runner.invoke(app, ["test_command"])
 
-    assert 1 == 1
+    assert result.output_text == "test echo"

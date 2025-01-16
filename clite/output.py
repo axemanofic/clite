@@ -1,6 +1,5 @@
 import sys
-
-from typing import IO, Any, TextIO, Optional
+from typing import IO, Any, Optional, TextIO
 
 
 def _make_file_stdout() -> TextIO:

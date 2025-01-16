@@ -7,52 +7,50 @@ from clite.types import Argv
 class Command:
     def __init__(
         self,
-        name: Optional[None],
-        description: Optional[None],
+        name: Optional[str],
+        description: Optional[str],
         func: Callable,
     ):
         self.name = func.__name__ if name is None else name
         self.description = description
         self.func = func
 
+    def __repr__(self):
+        return self.name.lower()
+
 
 class Clite:
-    def __init__(self, name, description):
-        self.name = name
+    def __init__(
+        self,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+    ):
+        self.name = "clite" if name is None else name.lower()
         self.description = description
         self.commands: dict[str, Command] = {}
 
     def command(
         self,
-        name: Optional[None] = None,
-        description: Optional[None] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
     ):
-        def wrapper(func: Callable):
+       def wrapper(func: Callable):
             cmd = Command(name, description, func)
-            self.commands[cmd.name] = cmd
+            self.commands[f"{self}:{cmd}"] = cmd
+            print(self.commands)
             return func
 
         return wrapper
 
-    def run(
-        self,
-        argv: Argv,
-    ) -> None:
+    def run(self, argv: Argv) -> Any:
+        print(argv)
         if argv is None:
             argv = []
-        try:
-            self.commands[argv[0]].func()
-        except Exception as e:
-            print(e)
-        finally:
-            import sys
-
-            sys.stdout.flush()
-            stdout = sys.stdout
-
-        for line in stdout:
-            print(f"line={line}")
+        return self.commands[f"{self}:{argv[0]}"].func()
 
     def __call__(self, *args: Any, **kwds: Any) -> Any:
-        raise Exception("Not implemented")
-        self.commands["test"].func(*args, **kwds)
+        print(args, kwds)
+        self.commands[f"{self}:test"].func(*args, **kwds)
+
+    def __repr__(self):
+        return self.name.lower()

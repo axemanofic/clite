@@ -1,11 +1,7 @@
-from typing import Optional
+from typing import Any, Optional
+
 from clite import Clite
 from clite.types import Argv
-
-
-class Result:
-    def __init__(self):
-        pass
 
 
 class CliRunner:
@@ -13,17 +9,7 @@ class CliRunner:
         self,
         clite_instance: Clite,
         argv: Argv = None,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-    ):
-        import sys
-
-        result = clite_instance.run(
-            argv,
-            # name,
-            # description,
-        )
-
-        for line in sys.stdout:
-            print(line)
-        return Result()
+    ) -> Any:
+        result = clite_instance(argv)
+        print(result)
+        return result

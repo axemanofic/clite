@@ -6,7 +6,7 @@ from clite.types import Argv
 
 class Command:
     def __init__(self, name: Optional[str], description: Optional[str], func: Callable):
-        self.name = func.__name__ if name is None else name
+        self.name: str = func.__name__ if name is None else name
         self.description = description
         self.func = func
 
@@ -38,7 +38,5 @@ class Clite:
         print(args, kwds)
         self.commands[f"{self}:test"].func(*args, **kwds)
 
-    def __repr__(self):
-        if self.name is None:
-            return "clite"
-        return self.name.lower()
+    def __repr__(self) -> str:
+        return self.name

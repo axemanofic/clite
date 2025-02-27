@@ -36,6 +36,6 @@ def test_run_command(runner: "CliRunner"):
     @app.command()
     def test_command():
         return 1 + 1
-    
+
     result = runner.invoke(app, ["test_command"])
     assert result == 0

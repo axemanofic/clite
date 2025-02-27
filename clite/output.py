@@ -1,5 +1,5 @@
 import sys
-from typing import IO, Any, Optional, TextIO
+from typing import TextIO
 
 
 def _make_file_stdout() -> TextIO:
@@ -10,11 +10,7 @@ def _make_file_stderr() -> TextIO:
     return sys.stderr
 
 
-def echo(
-    message: str,
-    is_err: bool = False,
-    is_new_line: bool = True,
-) -> None:
+def echo(message: str, is_err: bool = False, is_new_line: bool = True) -> None:
     file = None
     if is_err:
         file = _make_file_stderr()

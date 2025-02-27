@@ -1,0 +1,97 @@
+# Set the maximum line length to 120.
+line-length = 120
+fix = false
+show-fixes = false
+output-format = "grouped"
+target-version = "py39"
+
+[lint]
+# Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that
+# overlap with the use of a formatter, like Black, but we can override this behavior by
+# explicitly adding the rule.
+extend-select = ["E501"]
+select = [
+  "ERA",
+  "ANN",
+  "S",
+  "BLE",
+  "FBT",
+  "B",
+  "A",
+  "COM",
+  "C4",
+  "DTZ",
+  "T10",
+  "EM",
+  "ISC",
+  "INP",
+  "PIE",
+  "T20",
+  "PYI",
+  "PT",
+  "Q",
+  "RSE",
+  "RET",
+  "SLF",
+  "SIM",
+  "TID252",
+  "TID253",
+  "TC",
+  "ARG",
+  "PTH",
+  "FLY",
+  "I",
+  "C90",
+  "N",
+  "E",
+  "W",
+  "DOC",
+  "D",
+  "F",
+  "PGH",
+  "UP",
+  "RUF",
+  "FURB",
+  "TRY",
+]
+fixable = [
+  "ANN",
+  "B",
+  "COM",
+  "C4",
+  "EM",
+  "ISC",
+  "ICN",
+  "PIE",
+  "T20",
+  "PYI",
+  "PT",
+  "Q",
+  "RSE",
+  "RET",
+  "SIM",
+  "TID252",
+  "TC",
+  "PTH",
+  "FLY",
+  "I",
+  "N",
+  "E",
+  "W",
+  "D",
+  "F",
+  "PGH",
+  "UP",
+  "FURB",
+  "RUF",
+  "TRY",
+]
+extend-ignore = ["D104"]
+
+[format]
+# Whether to format code snippets in docstrings.
+# When this is enabled, Python code examples within docstrings are automatically reformatted.
+docstring-code-format = true
+# Ruff uses existing trailing commas as an indication that short lines should be left separate. 
+# If this option is set to true, the magic trailing comma is ignored.
+skip-magic-trailing-comma = true

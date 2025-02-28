@@ -34,8 +34,21 @@ def test_run_command(runner: "CliRunner"):
     app = Clite()
 
     @app.command()
-    def test_command():
-        return 1 + 1
+    def todo_list() -> None:
+        pass
 
-    result = runner.invoke(app, ["test_command"])
-    assert result == 0
+    result = runner.invoke(app, ["todo_list"])
+    assert result.code == 0
+
+
+def test_arguments(runner: "CliRunner"):
+    from clite import Clite
+
+    app = Clite()
+
+    @app.command()
+    def todo_list(arg1: int, arg2: str) -> None:
+        pass
+
+    result = runner.invoke(app, ["todo_list", "1", "hello"])
+    assert result.code == 0

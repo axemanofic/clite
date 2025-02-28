@@ -1,11 +1,9 @@
-from typing import Any
-
 from clite import Clite
+from clite.main import Result
 from clite.types import Argv
 
 
 class CliRunner:
-    def invoke(self, clite_instance: Clite, argv: Argv = None) -> Any:
+    def invoke(self, clite_instance: Clite, argv: Argv = None) -> Result:
         result = clite_instance(argv)
-        print(result)
         return result

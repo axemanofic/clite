@@ -7,4 +7,10 @@ requires-python = ">=3.9"
 dependencies = []
 
 [dependency-groups]
-dev = ["isort>=5.13.2", "mypy>=1.14.1", "pytest>=8.3.4", "ruff>=0.9.0"]
+dev = [
+  "git-cliff>=2.8.0",
+  "isort>=5.13.2",
+  "mypy>=1.14.1",
+  "pytest>=8.3.4",
+  "ruff>=0.9.0",
+]

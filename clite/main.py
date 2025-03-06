@@ -1,16 +1,17 @@
+import sys
 from collections.abc import Callable
 from typing import Any, Optional
 
-from clite.parser import get_command, parse_command_line
+from clite.parser import analyse_signature, get_command, parse_command_line
 from clite.types import Argv
 
 
 class Result:
-    def __init__(self, code: int = 0):
-        self.code = code
+    def __init__(self, exit_code: int = 0):
+        self.exit_code = exit_code
 
     def __repr__(self) -> str:
-        return str(self.code)
+        return str(self.exit_code)
 
 
 class Command:
@@ -42,9 +43,10 @@ class Clite:
         return wrapper
 
     def _run(self, *args: Any, **kwds: Any) -> Result:
+        cmd, argv = get_command(self, args[0])
+        args, flags = parse_command_line(argv)
         try:
-            cmd, argv = get_command(self, args[0])
-            args, flags = parse_command_line(argv)
+            args, flags = analyse_signature(cmd.func, *args, **flags)
             cmd.func(*args, **flags)
         except Exception:
             return Result(1)
@@ -52,7 +54,7 @@ class Clite:
             return Result(0)
 
     def __call__(self, *args: Any, **kwds: Any) -> Result:
-        return self._run(*args, **kwds)
+        return self._run(sys.argv[1:])
 
     def __repr__(self) -> str:
         return self.name

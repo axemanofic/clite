@@ -1,6 +1,10 @@
-from typing import TYPE_CHECKING, Dict, Tuple
+import inspect
+from typing import TYPE_CHECKING, Callable, Dict, Tuple, TypeVar
 
-from typing_extensions import TypeAlias
+from typing_extensions import ParamSpec, TypeAlias
+
+from clite.errors import BadParameter
+from clite.params_types import covert_type
 
 if TYPE_CHECKING:
     from clite import Clite
@@ -10,6 +14,8 @@ if TYPE_CHECKING:
 Args: TypeAlias = Tuple[str]
 Flags: TypeAlias = Dict[str, str]
 
+P = ParamSpec('P')
+T = TypeVar('T')
 
 def get_command(
     clite_instance: "Clite", argv: list[str]
@@ -40,3 +46,22 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Flags]:
             arguments.append(arg)
     args = tuple(i for i in arguments)
     return args, flags
+
+
+def analyse_signature(func: Callable[P, T], *args, **kwargs) -> tuple[Args, Flags]:  # type: ignore
+    signature = inspect.signature(func)
+
+    bound_arguments = signature.bind(*args, **kwargs)
+    bound_arguments.apply_defaults()
+
+    for param_name, value in bound_arguments.arguments.items():
+        annotation = signature.parameters[param_name].annotation
+        value = covert_type(param_name=param_name, value=value, annotation=annotation).covert()
+        bound_arguments.arguments[param_name] = value
+
+    for param_name, value in bound_arguments.kwargs.items():
+        annotation = signature.parameters[param_name].annotation
+        value = covert_type(param_name=param_name, value=value, annotation=annotation).covert()
+        bound_arguments.kwargs[param_name] = value
+
+    return bound_arguments.args, bound_arguments.kwargs

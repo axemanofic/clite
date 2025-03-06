@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2025-03-06
+
+### 🐛 Bug Fixes
+
+- Fix error 'not found type_extensions'
+
+### 💼 Other
+
+- Create changelog
+- Bump version 0.2.1
+
 ## [0.2.0]
 
 ### 🚀 Features

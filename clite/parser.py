@@ -14,8 +14,9 @@ if TYPE_CHECKING:
 Args: TypeAlias = Tuple[str]
 Flags: TypeAlias = Dict[str, str]
 
-P = ParamSpec('P')
-T = TypeVar('T')
+P = ParamSpec("P")
+T = TypeVar("T")
+
 
 def get_command(
     clite_instance: "Clite", argv: list[str]
@@ -56,12 +57,16 @@ def analyse_signature(func: Callable[P, T], *args, **kwargs) -> tuple[Args, Flag
 
     for param_name, value in bound_arguments.arguments.items():
         annotation = signature.parameters[param_name].annotation
-        value = covert_type(param_name=param_name, value=value, annotation=annotation).covert()
+        value = covert_type(
+            param_name=param_name, value=value, annotation=annotation
+        ).covert()
         bound_arguments.arguments[param_name] = value
 
     for param_name, value in bound_arguments.kwargs.items():
         annotation = signature.parameters[param_name].annotation
-        value = covert_type(param_name=param_name, value=value, annotation=annotation).covert()
+        value = covert_type(
+            param_name=param_name, value=value, annotation=annotation
+        ).covert()
         bound_arguments.kwargs[param_name] = value
 
     return bound_arguments.args, bound_arguments.kwargs

@@ -4,6 +4,7 @@ fix = false
 show-fixes = false
 output-format = "grouped"
 target-version = "py39"
+extend-exclude = ["get_started.py", "tests"]
 
 [lint]
 # Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that
@@ -86,7 +87,7 @@ fixable = [
   "RUF",
   "TRY",
 ]
-extend-ignore = ["D104"]
+extend-ignore = ["D104", "D100", "D107"]
 
 [format]
 # Whether to format code snippets in docstrings.

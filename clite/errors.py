@@ -1,8 +1,26 @@
-class UsageError(Exception):
-    pass
+class CliteError(Exception):
+    """Clite error."""
 
 
-class BadParameter(Exception):
+class CommandNotFoundError(CliteError):
+    """Command not found error."""
+
     @classmethod
-    def fomat_message(cls, param_hint: str, message: str) -> "BadParameter":
+    def fomat_message(cls, message: str) -> "CommandNotFoundError":
+        """Format error message.
+
+        :return: CommandNotFoundError instance with formatted message
+        """
+        return cls(f"Command not found: {message}")
+
+
+class BadParameterError(CliteError):
+    """Bad parameter error."""
+
+    @classmethod
+    def fomat_message(cls, param_hint: str, message: str) -> "BadParameterError":
+        """Format error message.
+
+        :return: BadParameter instance with formatted message
+        """
         return cls(f"Invalid value for {param_hint}: {message}")

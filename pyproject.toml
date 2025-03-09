@@ -8,9 +8,22 @@ dependencies = ["typing-extensions>=4.12.2"]
 
 [dependency-groups]
 dev = [
+  "black>=25.1.0",
   "git-cliff>=2.8.0",
   "isort>=5.13.2",
   "mypy>=1.14.1",
   "pytest>=8.3.4",
   "ruff>=0.9.0",
 ]
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+py_version = 39
+line_length = 120
+
+[tool.mypy]
+strict = true

@@ -1,9 +1,26 @@
 from clite import Clite
-from clite.main import Result
-from clite.types import Argv
+from clite.errors import CliteError
+
+
+class Result:
+    """Result class for testing."""
+
+    def __init__(self, exit_code: int = 0) -> None:
+        self.exit_code = exit_code
 
 
 class CliRunner:
-    def invoke(self, clite_instance: Clite, argv: Argv = None) -> Result:
-        result = clite_instance._run(argv)
-        return result
+    """CliRunner class for testing."""
+
+    def invoke(self, clite_instance: Clite, argv: list[str]) -> Result:
+        """Invoke the command.
+
+        :param clite_instance: clite instance
+        :param argv: list of arguments
+        :return: exit code
+        """
+        try:
+            clite_instance._run(argv)  # noqa: SLF001
+        except CliteError:
+            return Result(exit_code=1)
+        return Result(exit_code=0)

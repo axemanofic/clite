@@ -2,7 +2,7 @@
 
 > The name is inspired by the [SQLite](https://www.sqlite.org/)
 
-## :warning: This package is currently under development. :warning:
+## Warning: This package is currently under development.
 
 ## Installation
 
@@ -30,16 +30,16 @@ if __name__ == "__main__":
 
 ## Roadmap
 
-### 0.1.0 - Create a library for creating command line interfaces
+### 0.2.0 - Create a library for creating command line interfaces
 - [x] Make it possible to create a CLI application
 - [x] Make it possible to create a command via a decorator
 - [x] Make it possible to create command arguments
 - [x] Make it possible to create optional command arguments
 
-### 0.2.0
+### 0.3.0
 - [ ] Make it possible to create subcommands
 
-### 0.3.0 - Echo message in the console
+### 0.4.0 - Echo message in the console
 - [ ] Make it possible to echo a message in the console
 
 ---

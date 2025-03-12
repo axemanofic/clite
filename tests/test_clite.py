@@ -126,3 +126,18 @@ def test_mixed_default(runner: "CliRunner") -> None:
     result = runner.invoke(app, ["todo_list", "1"])
 
     assert result.exit_code == 0
+
+def test_flags_quotes(runner: "CliRunner") -> None:
+    from clite import Clite
+
+    app = Clite()
+
+    @app.command()
+    def todo_list(flag_str: str = "world") -> None:
+        pass
+
+    result = runner.invoke(
+        app, ["todo_list", '--flag_str="value=with=equals"']
+    )
+
+    assert result.exit_code == 0

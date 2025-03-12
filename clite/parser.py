@@ -44,7 +44,7 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Flags]:
     for arg in argv:
         if arg.startswith("--"):
             try:
-                flag, value = arg[2:].split("=")
+                flag, value = arg[2:].split("=", maxsplit=1)
             except ValueError:
                 flag = arg[2:]
                 value = ""

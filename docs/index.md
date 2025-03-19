@@ -1,20 +1,19 @@
-# Welcome to MkDocs
+# Clite 
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+A small package for creating command line interfaces
 
-## Commands
+> The name is inspired by the [SQLite](https://www.sqlite.org/)
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+!!! warning 
+    This package is currently under development.
 
-## Project layout
+## Installation
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+```bash
+pip install clite
+```
+
+## Usage
 
 ```python
 from clite import Clite
@@ -26,33 +25,26 @@ app = Clite(
 
 @app.command()
 def hello():
-    a = 1
-    print(f"Hello, world! {a}")
+    print("Hello, world!")
 
 if __name__ == "__main__":
     app()
 ```
 
-!!! note "Outer Note"
+## Roadmap
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
-    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
-    massa, nec semper lorem quam in massa.
+### 0.2.0 - Create a library for creating command line interfaces
+- [x] Make it possible to create a CLI application
+- [x] Make it possible to create a command via a decorator
+- [x] Make it possible to create command arguments
+- [x] Make it possible to create optional command arguments
 
-    !!! note "Inner Note"
+### 0.3.0
+- [ ] Make it possible to create subcommands
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
-        nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+### 0.4.0 - Echo message in the console
+- [ ] Make it possible to echo a message in the console
 
- ??? note
+---
 
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
-    nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
-
- !!! info inline end "Lorem ipsum"
-
-    Lorem ipsum dolor sit amet, consectetur
-    adipiscing elit. Nulla et euismod nulla.
-    Curabitur feugiat, tortor non consequat
-    finibus, justo purus auctor massa, nec
-    semper lorem quam in massa.   massa, nec semper lorem quam in massa.       massa, nec semper lorem quam in massa.
+Copyright 2024 - today, Roman Sotnikov. All rights reserved.

@@ -1,36 +1,90 @@
-site_name: Clite
-site_url: https://mydomain.org/mysite
+site_name: clite
+repo_url: https://github.com/axemanofic/clite
+repo_name: axemanofic/clite
 theme:
   name: material
+  custom_dir: ./docs/overrides
+  logo: assets/logo.svg
+  favicon: assets/logo.ico
   icon:
-    admonition:
-      note: octicons/tag-16
-      abstract: octicons/checklist-16
-      info: octicons/info-16
-      tip: octicons/squirrel-16
-      success: octicons/check-16
-      question: octicons/question-16
-      warning: octicons/alert-16
-      failure: octicons/x-circle-16
-      danger: octicons/zap-16
-      bug: octicons/bug-16
-      example: octicons/beaker-16
-      quote: octicons/quote-16
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
   palette:
-    - scheme: catppuccin-latte
+    - media: "(prefers-color-scheme)"
       toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - scheme: catppuccin-mocha
-      toggle:
-        icon: material/brightness-4
+        icon: material/link
         name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: catppuccin-latte
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: catppuccin-mocha
+      toggle:
+        icon: material/toggle-switch-off
+        name: Switch to system preference
 markdown_extensions:
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.superfences
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+plugins:
+  - search
+  - tags
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          inventories:
+            - https://docs.python.org/3/objects.inv
+          load_external_modules: true
+          options:
+            extensions:
+              - griffe_typingdoc
+            # General 
+            allow_inspection: false
+            show_bases: true
+            show_source: false
+            # Headings
+            show_root_heading: true
+            parameter_headings: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            # Members
+            members_order: source
+            filters:
+              - '!^_'
+            show_labels: false
+            # Docstring
+            docstring_style: sphinx
+            show_if_no_docstring: true
+            merge_init_into_class: true
+            # Signatures
+            annotations_path: full
+            modernize_annotations: true
+            show_signature: true
+            show_signature_annotations: true
+            separate_signature: true
+extra:
+  social:
+    - icon: material/github
+      link: https://github.com/axemanofic/clite
+      name: Github
+    - icon: material/language-python
+      link: https://pypi.org/project/clite/
+      name: PyPi
+    - icon: material/twitter
+      link: https://x.com/axemanofic
+    - icon: material/linkedin
+      link: https://www.linkedin.com/in/axemanofic/
+copyright: Copyright &copy; 2025 Roman Sotnikov
 extra_css:
   - stylesheets/extra.css

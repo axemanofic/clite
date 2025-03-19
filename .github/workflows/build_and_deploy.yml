@@ -33,6 +33,6 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --group docs
       - name: mkdocs build
         run: uv run mkdocs gh-deploy --force

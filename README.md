@@ -1,16 +1,41 @@
-# Clite - a small package for creating command line interfaces
+<div align="center">
+    <h1> Clite </h1> 
+    <p>Small package for creating command line interfaces</p>
+    <p>The name is inspired by the <a href="https://www.sqlite.org/">SQLite</a></p>
+    <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/clite?pypiBaseUrl=https%3A%2F%2Fpypi.org&style=for-the-badge&color=dc8a78">
+    <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=dd7878">
+    <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=ea76cb">
+</div>
 
-> The name is inspired by the [SQLite](https://www.sqlite.org/)
+---
 
-## Warning: This package is currently under development.
+**Documentation**: <a href="https://axemanofic.github.io/clite" target="_blank">https://axemanofic.github.io/clite</a>
+
+**Source Code**: <a href="https://github.com/axemanofic/clite" target="_blank">https://github.com/axemanofic/clite</a>
+
+---
+
+!!! warning 
+    This package is currently under development.
 
 ## Installation
 
-```bash
-pip install clite
-```
+=== "pip"
+    ```sh
+    pip install clite
+    ```
+=== "uv"
+    ```sh
+    uv add clite
+    ```
+=== "poetry"
+    ```sh
+    poetry add clite
+    ```
 
 ## Usage
+
+### Example
 
 ```python
 from clite import Clite
@@ -21,27 +46,25 @@ app = Clite(
 )
 
 @app.command()
-def hello():
-    print("Hello, world!")
+def hello(name: str = "world"):
+    print(f"Hello, {name}!")
 
 if __name__ == "__main__":
     app()
 ```
 
-## Roadmap
+### Run it
 
-### 0.2.0 - Create a library for creating command line interfaces
-- [x] Make it possible to create a CLI application
-- [x] Make it possible to create a command via a decorator
-- [x] Make it possible to create command arguments
-- [x] Make it possible to create optional command arguments
+```sh
+python main.py hello Alice
+```
 
-### 0.3.0
-- [ ] Make it possible to create subcommands
+Output:
 
-### 0.4.0 - Echo message in the console
-- [ ] Make it possible to echo a message in the console
+```sh
+Hello, Alice!
+```
 
----
+## License
 
-Copyright 2024 - today, Roman Sotnikov. All rights reserved.
+This project is licensed under the terms of the MIT license.

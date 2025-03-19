@@ -1,6 +1,9 @@
-site_name: clite
+site_name: Clite
 repo_url: https://github.com/axemanofic/clite
 repo_name: axemanofic/clite
+site_description: Small package for creating command line interfaces
+site_author: Roman Sotnikov
+copyright: Copyright &copy; 2025 Roman Sotnikov
 theme:
   name: material
   custom_dir: ./docs/overrides
@@ -36,6 +39,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
 plugins:
   - search
   - tags
@@ -85,6 +90,5 @@ extra:
       link: https://x.com/axemanofic
     - icon: material/linkedin
       link: https://www.linkedin.com/in/axemanofic/
-copyright: Copyright &copy; 2025 Roman Sotnikov
 extra_css:
   - stylesheets/extra.css

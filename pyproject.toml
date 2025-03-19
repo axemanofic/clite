@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "clite"
 version = "0.2.1"
@@ -5,6 +9,48 @@ description = "Small package for creating command line interfaces"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = ["typing-extensions>=4.12.2"]
+authors = [{ name = "Roman Sotnikov", email = "axemanofic@gmail.com" }]
+maintainers = [{ name = "Roman Sotnikov", email = "axemanofic@gmail.com" }]
+license = { file = "LICENSE" }
+keywords = [
+  "python",
+  "shell",
+  "cli",
+  "terminal",
+  "typing",
+  "python3",
+  "click",
+  "typer",
+  "typehints",
+]
+classifiers = [
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: System Administrators",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development",
+  "Typing :: Typed",
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "License :: OSI Approved :: MIT License",
+]
+
+[project.urls]
+Homepage = "httphttps://axemanofic.github.io/clite"
+Documentation = "https://axemanofic.github.io/clite"
+Repository = "https://github.com/axemanofic/clite.git"
+Issues = "https://github.com/axemanofic/clite/issues"
+Changelog = "https://github.com/axemanofic/clite/blob/master/CHANGELOG.md"
 
 [dependency-groups]
 dev = [

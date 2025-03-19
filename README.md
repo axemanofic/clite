@@ -15,23 +15,11 @@
 
 ---
 
-!!! warning 
-    This package is currently under development.
-
 ## Installation
 
-=== "pip"
-    ```sh
-    pip install clite
-    ```
-=== "uv"
-    ```sh
-    uv add clite
-    ```
-=== "poetry"
-    ```sh
-    poetry add clite
-    ```
+```sh
+pip install clite
+```
 
 ## Usage
 
@@ -61,7 +49,7 @@ python main.py hello Alice
 
 Output:
 
-```sh
+```
 Hello, Alice!
 ```
 

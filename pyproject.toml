@@ -46,7 +46,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "httphttps://axemanofic.github.io/clite"
+Homepage = "https://axemanofic.github.io/clite"
 Documentation = "https://axemanofic.github.io/clite"
 Repository = "https://github.com/axemanofic/clite.git"
 Issues = "https://github.com/axemanofic/clite/issues"

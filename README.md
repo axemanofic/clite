@@ -1,5 +1,4 @@
 <div align="center">
-    <h1> Clite </h1> 
     <img alt="Clite" src="https://axemanofic.github.io/clite/assets/background.webp">
     <p>Small package for creating command line interfaces</p>
     <p>The name is inspired by the <a href="https://www.sqlite.org/">SQLite</a></p>

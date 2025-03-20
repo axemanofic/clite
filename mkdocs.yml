@@ -90,5 +90,8 @@ extra:
       link: https://x.com/axemanofic
     - icon: material/linkedin
       link: https://www.linkedin.com/in/axemanofic/
+  analytics:
+    provider: google
+    property: G-0JNRD3RCSC
 extra_css:
   - stylesheets/extra.css

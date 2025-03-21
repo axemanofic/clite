@@ -1,4 +1,5 @@
 site_name: Clite
+site_url: https://axemanofic.github.io/clite
 repo_url: https://github.com/axemanofic/clite
 repo_name: axemanofic/clite
 site_description: Small package for creating command line interfaces
@@ -12,6 +13,7 @@ theme:
   icon:
     repo: fontawesome/brands/github
   features:
+    - navigation.instant
     - navigation.tracking
     - navigation.top
     - navigation.footer

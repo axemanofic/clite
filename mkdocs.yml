@@ -90,8 +90,10 @@ extra:
       name: PyPi
     - icon: material/twitter
       link: https://x.com/axemanofic
+      name: Twitter
     - icon: material/linkedin
       link: https://www.linkedin.com/in/axemanofic/
+      name: LinkedIn
   analytics:
     provider: google
     property: G-0JNRD3RCSC

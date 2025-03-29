@@ -2,7 +2,7 @@ site_name: Clite
 site_url: https://axemanofic.github.io/clite
 repo_url: https://github.com/axemanofic/clite
 repo_name: axemanofic/clite
-site_description: Small package for creating command line interfaces
+site_description: A zero-dependency package for building CLIs. Based on type hints.
 site_author: Roman Sotnikov
 copyright: Copyright &copy; 2025 Roman Sotnikov
 theme:

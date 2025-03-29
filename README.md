@@ -1,6 +1,6 @@
 <div align="center">
     <img alt="Clite" src="https://axemanofic.github.io/clite/assets/background.webp">
-    <p>Small package for creating command line interfaces</p>
+    <p>A zero-dependency package for building CLIs. Based on type hints.</p>
     <p>The name is inspired by the <a href="https://www.sqlite.org/">SQLite</a></p>
     <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/clite?pypiBaseUrl=https%3A%2F%2Fpypi.org&style=for-the-badge&color=dc8a78">
     <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=dd7878">

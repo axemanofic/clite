@@ -41,13 +41,17 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Flags]:
     arguments: list[str] = []
     flags = {}
 
-    for arg in argv:
+    for idx, arg in enumerate(argv):
         if arg.startswith("--"):
             try:
                 flag, value = arg[2:].split("=", maxsplit=1)
             except ValueError:
                 flag = arg[2:]
-                value = ""
+                value = argv[idx + 1]
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]
+            if value.startswith("'") and value.endswith("'"):
+                value = value[1:-1]
             flags[flag] = value
         elif arg.startswith("-"):
             flag = arg[1:]

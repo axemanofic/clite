@@ -23,7 +23,7 @@ class IntegerType(ParamType):
         try:
             return int(self.value)
         except ValueError as exc:
-            raise BadParameterError.fomat_message(param_hint=self.param_name, message=self.value) from exc
+            raise BadParameterError.format_message(param_hint=self.param_name, message=self.value) from exc
 
 
 class StringType(ParamType):
@@ -44,7 +44,7 @@ class BoolType(ParamType):
             return True
         if value in ("0", "false", "f", "no", "n", "off"):
             return False
-        raise BadParameterError.fomat_message(param_hint=self.param_name, message=self.value)
+        raise BadParameterError.format_message(param_hint=self.param_name, message=self.value)
 
 
 class FloatType(ParamType):
@@ -55,7 +55,7 @@ class FloatType(ParamType):
         try:
             return float(self.value)
         except ValueError as exc:
-            raise BadParameterError.fomat_message(param_hint=self.param_name, message=self.value) from exc
+            raise BadParameterError.format_message(param_hint=self.param_name, message=self.value) from exc
 
 
 def covert_type(*, param_name: str, value: str, annotation: type) -> ParamType:

@@ -19,11 +19,10 @@ def test_create_command() -> None:
     app = Clite("test_app", description="test_descr")
 
     @app.command(name="test_command", description="test_descr")
-    def test_command():
+    def test_command() -> None:
         pass
 
     command_key = f"{app.name}:test_command"
-    print(app.commands)
 
     assert app.commands[command_key].name == "test_command"
     assert app.commands[command_key].description == "test_descr"
@@ -48,7 +47,12 @@ def test_arguments(runner: "CliRunner") -> None:
     app = Clite()
 
     @app.command()
-    def todo_list(arg_int: int, arg_float: float, arg_str: str, arg_bool: bool) -> None:
+    def todo_list(
+        arg_int: int,
+        arg_float: float,
+        arg_str: str,
+        arg_bool: bool,
+    ) -> None:
         pass
 
     result = runner.invoke(app, ["todo_list", "1", "0.5", "hello", "true"])
@@ -76,7 +80,12 @@ def test_flags(runner: "CliRunner") -> None:
     app = Clite()
 
     @app.command()
-    def todo_list(flag_int: int = 3, flag_float: float = 0.3, flag_str: str = "world", flag_bool: bool = False) -> None:
+    def todo_list(
+        flag_int: int = 3,
+        flag_float: float = 0.3,
+        flag_str: str = "world",
+        flag_bool: bool = False,
+    ) -> None:
         pass
 
     result = runner.invoke(
@@ -127,6 +136,7 @@ def test_mixed_default(runner: "CliRunner") -> None:
 
     assert result.exit_code == 0
 
+
 def test_flags_quotes(runner: "CliRunner") -> None:
     from clite import Clite
 
@@ -136,8 +146,6 @@ def test_flags_quotes(runner: "CliRunner") -> None:
     def todo_list(flag_str: str = "world") -> None:
         pass
 
-    result = runner.invoke(
-        app, ["todo_list", '--flag_str="value=with=equals"']
-    )
+    result = runner.invoke(app, ["todo_list", '--flag_str="value=with=equals"'])
 
     assert result.exit_code == 0

@@ -1,10 +1,11 @@
 import sys
 from typing import Any, Callable, Optional, TypeVar
 
-from typing_extensions import ParamSpec
-
-from clite.errors import CliteError
-from clite.parser import analyse_signature, get_command, parse_command_line
+from ._typing import ParamSpec
+from .errors import CliteError
+from .helper import Helper
+from .parser import analyse_signature, get_command, parse_command_line
+from .utils import echo
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -16,7 +17,12 @@ class Command:
     Class describing the command to be executed
     """
 
-    def __init__(self, name: Optional[str], description: Optional[str], func: Callable[..., T]) -> None:
+    def __init__(
+        self,
+        name: Optional[str],
+        description: Optional[str],
+        func: Callable[..., T],
+    ) -> None:
         self.name: str = func.__name__ if name is None else name
         self.description = description
         self.func = func
@@ -81,7 +87,15 @@ class Clite:
         :return: exit code
         """
         if argv:
+            if argv[0] in ("--help", "-h"):
+                h = Helper()
+                h.create_help_clite(self)
+                return
             cmd, argv = get_command(self, argv)
+            if argv[-1] in ("--help", "-h"):
+                h = Helper()
+                h.create_help_command(cmd)
+                return
             arguments, flags = parse_command_line(argv)
             arguments, flags = analyse_signature(cmd.func, arguments, flags)
             cmd.func(*arguments, **flags)
@@ -100,7 +114,8 @@ class Clite:
         """
         try:
             self._run(sys.argv[1:])
-        except CliteError:
+        except CliteError as err:
+            echo(err, file=sys.stderr)
             return 1
         else:
             return 0

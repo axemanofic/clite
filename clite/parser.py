@@ -1,11 +1,9 @@
-# noqa: A005
 import inspect
 from typing import TYPE_CHECKING, Annotated, Callable, TypeVar, get_args, get_origin
 
-from typing_extensions import ParamSpec, TypeAlias
-
-from clite.errors import CommandNotFoundError
-from clite.params_types import covert_type
+from ._typing import ParamSpec, TypeAlias
+from .errors import CommandNotFoundError
+from .params_types import covert_type
 
 if TYPE_CHECKING:
     from clite import Clite
@@ -57,6 +55,9 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
     options = {}
 
     for idx, arg in enumerate(argv):
+        if arg in ("-h", "--help"):
+            options[arg[2:]] = ""
+            break
         if arg.startswith("--"):
             try:
                 option, value = arg[2:].split("=", maxsplit=1)

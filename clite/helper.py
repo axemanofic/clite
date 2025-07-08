@@ -31,5 +31,7 @@ class Helper:
         echo(f"{instance.name} - {instance.description}\n")
         echo(f"Usage: {instance.name} [OPTIONS] <COMMAND>\n")
         echo("Commands:")
-        for cmd in instance.commands.values():
+        for key, cmd in instance.commands.items():
+            if cmd.is_root:
+                continue
             echo(f"{cmd.name} - {cmd.description}")

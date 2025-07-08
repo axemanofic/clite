@@ -2,6 +2,18 @@ class CliteError(Exception):
     """Clite error."""
 
 
+class RootCommandNotFoundError(CliteError):
+    """Command not found error."""
+
+    @classmethod
+    def format_message(cls, message: str) -> "RootCommandNotFoundError":
+        """Format error message.
+
+        :return: RootCommandNotFoundError instance with formatted message
+        """
+        return cls(f"Root command not found: {message}")
+
+
 class CommandNotFoundError(CliteError):
     """Command not found error."""
 

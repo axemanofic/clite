@@ -2,7 +2,7 @@ import inspect
 from typing import TYPE_CHECKING, Annotated, Callable, TypeVar, get_args, get_origin
 
 from ._typing import ParamSpec, TypeAlias
-from .errors import CommandNotFoundError
+from .errors import CommandNotFoundError, RootCommandNotFoundError
 from .params_types import covert_type
 
 if TYPE_CHECKING:
@@ -25,7 +25,13 @@ def get_command(clite_instance: "Clite", argv: list[str]) -> tuple["Command", li
     :return: command and list of arguments
     """
     cmd_key = f"{clite_instance}:{argv[0]}"
-    if cmd := clite_instance.commands.get(cmd_key):
+
+    cmd = clite_instance.commands.get(cmd_key)
+
+    if argv[0] == "root" and cmd is None:
+        raise RootCommandNotFoundError.format_message(argv[0])
+
+    if cmd:
         return cmd, argv[1:]
     raise CommandNotFoundError.format_message(argv[0])
 
@@ -56,7 +62,7 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
 
     for idx, arg in enumerate(argv):
         if arg in ("-h", "--help"):
-            options[arg[2:]] = ""
+            options["help"] = ""
             break
         if arg.startswith("--"):
             try:
@@ -69,6 +75,8 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
             elif value.startswith("'") and value.endswith("'"):
                 value = value[1:-1]
             options[option] = value
+        elif argv[idx - 1].startswith():
+            continue
         elif arg.startswith("-"):
             option = arg[1:]
             options[option] = ""
@@ -90,8 +98,14 @@ def analyse_signature(
     :param options: dictionary of options
     :return: tuple of arguments and options
     """
+    from typing import get_type_hints
+
+    th = get_type_hints(func)
+    print(th)
+
     signature = inspect.signature(func)
 
+    print(arguments, options)
     bound_arguments = signature.bind(*arguments, **options)
     bound_arguments.apply_defaults()
 

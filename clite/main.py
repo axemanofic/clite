@@ -2,7 +2,7 @@ import sys
 from typing import Any, Callable, Optional, TypeVar
 
 from ._typing import ParamSpec
-from .errors import CliteError
+from .errors import CliteError, RootCommandNotFoundError
 from .helper import Helper
 from .parser import analyse_signature, get_command, parse_command_line
 from .utils import echo
@@ -22,10 +22,13 @@ class Command:
         name: Optional[str],
         description: Optional[str],
         func: Callable[..., T],
+        *,
+        is_root: bool = False,
     ) -> None:
         self.name: str = func.__name__ if name is None else name
         self.description = description
         self.func = func
+        self.is_root = is_root
 
     def __repr__(self) -> str:
         """Return the name of the command.
@@ -78,6 +81,33 @@ class Clite:
 
         return wrapper
 
+    def root(
+        self,
+        name: Optional[str] = None,
+        *,
+        description: Optional[str] = None,
+    ) -> Callable[[Callable[P, T]], Callable[P, None]]:
+        """Return wrapper function.
+
+        :param name: name of the command
+        :param description: description of the command.
+        :return: wrapped function
+        """
+
+        def wrapper(func: Callable[P, T]) -> Callable[..., Any]:
+            """Return wrapped function.
+
+            Adds the root command to the dictionary of commands
+
+            :param func: function to be wrapped
+            :return: wrapped function
+            """
+            cmd = Command(name, description, func, is_root=True)
+            self.commands[f"{self}:{cmd}"] = cmd
+            return func
+
+        return wrapper
+
     def _run(self, argv: list[str]) -> None:
         """Run the command.
 
@@ -86,17 +116,32 @@ class Clite:
         :param argv: list of arguments
         :return: exit code
         """
+        if not argv:
+            try:
+                cmd, argv = get_command(self, ["root"])
+            except RootCommandNotFoundError:
+                h = Helper()
+                h.create_help_clite(self)
+                return
+            arguments, flags = parse_command_line(argv)
+            if "help" in flags:
+                h = Helper()
+                h.create_help_command(cmd)
+                return
+            arguments, flags = analyse_signature(cmd.func, arguments, flags)
+            cmd.func(*arguments, **flags)
+
         if argv:
             if argv[0] in ("--help", "-h"):
                 h = Helper()
                 h.create_help_clite(self)
                 return
             cmd, argv = get_command(self, argv)
-            if argv[-1] in ("--help", "-h"):
+            arguments, flags = parse_command_line(argv)
+            if "help" in flags:
                 h = Helper()
                 h.create_help_command(cmd)
                 return
-            arguments, flags = parse_command_line(argv)
             arguments, flags = analyse_signature(cmd.func, arguments, flags)
             cmd.func(*arguments, **flags)
 

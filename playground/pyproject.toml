@@ -1,0 +1,23 @@
+[project]
+name = "playground"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["clite"]
+
+[project.scripts]
+play = "main:app"
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]
+clite = { path = "../" }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["./"]

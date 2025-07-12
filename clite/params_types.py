@@ -1,6 +1,6 @@
 from typing import Any
 
-from clite.errors import BadParameterError
+from .errors import BadParameterError
 
 
 class ParamType:
@@ -14,9 +14,21 @@ class ParamType:
         """Convert the value to the desired type."""
         raise NotImplementedError
 
+    def __repr__(self) -> str:
+        """
+        Return the type of the parameter.
+
+        :return: type of the parameter
+        """
+        raise NotImplementedError
+
 
 class IntegerType(ParamType):
     """Integer parameter type."""
+
+    def __repr__(self) -> str:
+        """Return the type of the parameter."""
+        return "INTEGER"
 
     def covert(self) -> int:
         """Convert the value to an integer."""
@@ -29,6 +41,10 @@ class IntegerType(ParamType):
 class StringType(ParamType):
     """String parameter type."""
 
+    def __repr__(self) -> str:
+        """Return the type of the parameter."""
+        return "STRING"
+
     def covert(self) -> str:
         """Convert the value to a string."""
         return self.value
@@ -36,6 +52,10 @@ class StringType(ParamType):
 
 class BoolType(ParamType):
     """Boolean parameter type."""
+
+    def __repr__(self) -> str:
+        """Return the type of the parameter."""
+        return "BOOLEAN"
 
     def covert(self) -> bool:
         """Convert the value to a boolean."""
@@ -49,6 +69,10 @@ class BoolType(ParamType):
 
 class FloatType(ParamType):
     """Float parameter type."""
+
+    def __repr__(self) -> str:
+        """Return the type of the parameter."""
+        return "FLOAT"
 
     def covert(self) -> float:
         """Convert the value to a float."""

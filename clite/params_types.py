@@ -10,21 +10,23 @@ class ParamType:
         self.param_name = param_name
         self.value = value
 
-    @property
-    def param_type(self) -> str:
-        """Return the type of the parameter."""
-        raise NotImplementedError
-
     def covert(self) -> Any:  # noqa: ANN401
         """Convert the value to the desired type."""
+        raise NotImplementedError
+
+    def __repr__(self) -> str:
+        """
+        Return the type of the parameter.
+
+        :return: type of the parameter
+        """
         raise NotImplementedError
 
 
 class IntegerType(ParamType):
     """Integer parameter type."""
 
-    @property
-    def param_type(self) -> str:
+    def __repr__(self) -> str:
         """Return the type of the parameter."""
         return "INTEGER"
 
@@ -39,8 +41,7 @@ class IntegerType(ParamType):
 class StringType(ParamType):
     """String parameter type."""
 
-    @property
-    def param_type(self) -> str:
+    def __repr__(self) -> str:
         """Return the type of the parameter."""
         return "STRING"
 
@@ -52,8 +53,7 @@ class StringType(ParamType):
 class BoolType(ParamType):
     """Boolean parameter type."""
 
-    @property
-    def param_type(self) -> str:
+    def __repr__(self) -> str:
         """Return the type of the parameter."""
         return "BOOLEAN"
 
@@ -70,8 +70,7 @@ class BoolType(ParamType):
 class FloatType(ParamType):
     """Float parameter type."""
 
-    @property
-    def param_type(self) -> str:
+    def __repr__(self) -> str:
         """Return the type of the parameter."""
         return "FLOAT"
 

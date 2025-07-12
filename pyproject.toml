@@ -79,8 +79,3 @@ line_length = 120
 
 [tool.mypy]
 strict = true
-
-[tool.uv.workspace]
-members = [
-    "playground",
-]

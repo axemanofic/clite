@@ -58,6 +58,7 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
     :return: tuple of arguments and options
     """
     arguments: list[str] = []
+    # arguments = {}
     options = {}
 
     for idx, arg in enumerate(argv):
@@ -75,7 +76,7 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
             elif value.startswith("'") and value.endswith("'"):
                 value = value[1:-1]
             options[option] = value
-        elif argv[idx - 1].startswith():
+        elif argv[idx - 1].startswith(("--", "-")):
             continue
         elif arg.startswith("-"):
             option = arg[1:]

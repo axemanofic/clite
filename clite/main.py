@@ -123,7 +123,7 @@ class Clite:
                 h = Helper()
                 h.create_help_clite(self)
                 return
-            arguments, flags = parse_command_line(argv)
+            arguments, flags = parse_command_line(argv, cmd)
             if "help" in flags:
                 h = Helper()
                 h.create_help_command(cmd)
@@ -137,7 +137,7 @@ class Clite:
                 h.create_help_clite(self)
                 return
             cmd, argv = get_command(self, argv)
-            arguments, flags = parse_command_line(argv)
+            arguments, flags = parse_command_line(argv, cmd)
             if "help" in flags:
                 h = Helper()
                 h.create_help_command(cmd)

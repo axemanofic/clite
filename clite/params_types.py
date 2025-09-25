@@ -1,6 +1,6 @@
 from typing import Any
 
-from clite.errors import BadParameterError
+from .errors import BadParameterError
 
 
 class ParamType:
@@ -14,20 +14,36 @@ class ParamType:
         """Convert the value to the desired type."""
         raise NotImplementedError
 
+    def __repr__(self) -> str:
+        """
+        Return the type of the parameter.
+
+        :return: type of the parameter
+        """
+        raise NotImplementedError
+
 
 class IntegerType(ParamType):
     """Integer parameter type."""
+
+    def __repr__(self) -> str:
+        """Return the type of the parameter."""
+        return "INTEGER"
 
     def covert(self) -> int:
         """Convert the value to an integer."""
         try:
             return int(self.value)
         except ValueError as exc:
-            raise BadParameterError.fomat_message(param_hint=self.param_name, message=self.value) from exc
+            raise BadParameterError.format_message(param_hint=self.param_name, message=self.value) from exc
 
 
 class StringType(ParamType):
     """String parameter type."""
+
+    def __repr__(self) -> str:
+        """Return the type of the parameter."""
+        return "STRING"
 
     def covert(self) -> str:
         """Convert the value to a string."""
@@ -37,6 +53,10 @@ class StringType(ParamType):
 class BoolType(ParamType):
     """Boolean parameter type."""
 
+    def __repr__(self) -> str:
+        """Return the type of the parameter."""
+        return "BOOLEAN"
+
     def covert(self) -> bool:
         """Convert the value to a boolean."""
         value = self.value.lower()
@@ -44,18 +64,22 @@ class BoolType(ParamType):
             return True
         if value in ("0", "false", "f", "no", "n", "off"):
             return False
-        raise BadParameterError.fomat_message(param_hint=self.param_name, message=self.value)
+        raise BadParameterError.format_message(param_hint=self.param_name, message=self.value)
 
 
 class FloatType(ParamType):
     """Float parameter type."""
+
+    def __repr__(self) -> str:
+        """Return the type of the parameter."""
+        return "FLOAT"
 
     def covert(self) -> float:
         """Convert the value to a float."""
         try:
             return float(self.value)
         except ValueError as exc:
-            raise BadParameterError.fomat_message(param_hint=self.param_name, message=self.value) from exc
+            raise BadParameterError.format_message(param_hint=self.param_name, message=self.value) from exc
 
 
 def covert_type(*, param_name: str, value: str, annotation: type) -> ParamType:

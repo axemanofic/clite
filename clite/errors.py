@@ -2,11 +2,23 @@ class CliteError(Exception):
     """Clite error."""
 
 
+class RootCommandNotFoundError(CliteError):
+    """Command not found error."""
+
+    @classmethod
+    def format_message(cls, message: str) -> "RootCommandNotFoundError":
+        """Format error message.
+
+        :return: RootCommandNotFoundError instance with formatted message
+        """
+        return cls(f"Root command not found: {message}")
+
+
 class CommandNotFoundError(CliteError):
     """Command not found error."""
 
     @classmethod
-    def fomat_message(cls, message: str) -> "CommandNotFoundError":
+    def format_message(cls, message: str) -> "CommandNotFoundError":
         """Format error message.
 
         :return: CommandNotFoundError instance with formatted message
@@ -18,7 +30,7 @@ class BadParameterError(CliteError):
     """Bad parameter error."""
 
     @classmethod
-    def fomat_message(cls, param_hint: str, message: str) -> "BadParameterError":
+    def format_message(cls, param_hint: str, message: str) -> "BadParameterError":
         """Format error message.
 
         :return: BadParameter instance with formatted message

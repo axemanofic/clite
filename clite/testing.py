@@ -21,6 +21,6 @@ class CliRunner:
         """
         try:
             clite_instance._run(argv)  # noqa: SLF001
-        except CliteError:
-            return Result(exit_code=1)
+        except CliteError as err:
+            return Result(exit_code=err.exit_code)
         return Result(exit_code=0)

@@ -76,8 +76,6 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
             elif value.startswith("'") and value.endswith("'"):
                 value = value[1:-1]
             options[option] = value
-        elif argv[idx - 1].startswith(("--", "-")):
-            continue
         elif arg.startswith("-"):
             option = arg[1:]
             options[option] = ""
@@ -101,12 +99,8 @@ def analyse_signature(
     """
     from typing import get_type_hints
 
-    th = get_type_hints(func)
-    print(th)
-
     signature = inspect.signature(func)
 
-    print(arguments, options)
     bound_arguments = signature.bind(*arguments, **options)
     bound_arguments.apply_defaults()
 

@@ -117,33 +117,25 @@ class Clite:
         :return: exit code
         """
         if not argv:
-            try:
-                cmd, argv = get_command(self, ["root"])
-            except RootCommandNotFoundError:
-                h = Helper()
-                h.create_help_clite(self)
-                return
-            arguments, flags = parse_command_line(argv, cmd)
-            if "help" in flags:
-                h = Helper()
-                h.create_help_command(cmd)
-                return
-            arguments, flags = analyse_signature(cmd.func, arguments, flags)
-            cmd.func(*arguments, **flags)
+            argv = ["root"]
 
-        if argv:
-            if argv[0] in ("--help", "-h"):
-                h = Helper()
-                h.create_help_clite(self)
-                return
+        try:
             cmd, argv = get_command(self, argv)
-            arguments, flags = parse_command_line(argv, cmd)
-            if "help" in flags:
-                h = Helper()
-                h.create_help_command(cmd)
-                return
-            arguments, flags = analyse_signature(cmd.func, arguments, flags)
-            cmd.func(*arguments, **flags)
+        except RootCommandNotFoundError:
+            h = Helper()
+            h.create_help_clite(self)
+            return
+
+        arguments, flags = parse_command_line(argv)
+
+        if "help" in flags:
+            h = Helper()
+            h.create_help_command(cmd)
+            return
+
+        arguments, flags = analyse_signature(cmd.func, arguments, flags)
+
+        cmd.func(*arguments, **flags)
 
     def __repr__(self) -> str:
         """Return the name of the app.
@@ -160,7 +152,7 @@ class Clite:
         try:
             self._run(sys.argv[1:])
         except CliteError as err:
-            echo(err, file=sys.stderr)
-            return 1
+            echo(err.__str__(), file=sys.stderr)
+            return err.exit_code
         else:
             return 0

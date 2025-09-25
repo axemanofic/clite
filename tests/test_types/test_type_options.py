@@ -36,4 +36,4 @@ def test_flags_error(runner: "CliRunner") -> None:
 
     result = runner.invoke(app, ["todo_list", "--flag_int=asdasd"])
 
-    assert result.exit_code == 1
+    assert result.exit_code == 2

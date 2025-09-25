@@ -36,4 +36,4 @@ def test_arguments_bad(runner: "CliRunner") -> None:
 
     result = runner.invoke(app, ["todo_list", "dasd"])
 
-    assert result.exit_code == 1
+    assert result.exit_code == 2

@@ -200,10 +200,6 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "black" },
-    { name = "git-cliff" },
-    { name = "ipython", version = "8.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "ipython", version = "8.37.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "ipython", version = "9.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "isort" },
     { name = "mypy" },
     { name = "ruff" },
@@ -217,6 +213,12 @@ tests = [
     { name = "nox" },
     { name = "pytest" },
 ]
+tools = [
+    { name = "git-cliff" },
+    { name = "ipython", version = "8.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "ipython", version = "8.37.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "ipython", version = "9.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+]
 
 [package.metadata]
 requires-dist = [{ name = "typing-extensions", specifier = ">=4.12.2" }]
@@ -224,8 +226,6 @@ requires-dist = [{ name = "typing-extensions", specifier = ">=4.12.2" }]
 [package.metadata.requires-dev]
 dev = [
     { name = "black", specifier = ">=25.1.0" },
-    { name = "git-cliff", specifier = ">=2.8.0" },
-    { name = "ipython", specifier = ">=8.18.1" },
     { name = "isort", specifier = ">=5.13.2" },
     { name = "mypy", specifier = ">=1.14.1" },
     { name = "ruff", specifier = ">=0.9.0" },
@@ -238,6 +238,10 @@ docs = [
 tests = [
     { name = "nox", specifier = ">=2025.5.1" },
     { name = "pytest", specifier = ">=8.3.4" },
+]
+tools = [
+    { name = "git-cliff", specifier = ">=2.8.0" },
+    { name = "ipython", specifier = ">=8.18.1" },
 ]
 
 [[package]]

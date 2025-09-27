@@ -56,7 +56,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     needs:
-      - lints
+      - build
     strategy:
       fail-fast: false
       matrix:

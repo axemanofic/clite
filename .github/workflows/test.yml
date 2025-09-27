@@ -11,7 +11,7 @@ concurrency:
 permissions:
   contents: read
 jobs:
-  build:
+  lints:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -30,33 +30,18 @@ jobs:
       - name: Install dependencies
         run: |
           uv sync --locked --only-dev
-  format:
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    steps:
       - name: Run black
         run: uv run black --check .
       - name: Run isort
         run: uv run isort --check .
-  lint:
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    steps:
       - name: Run ruff
         run: uv run ruff check .
-  typing:
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    steps:
       - name: Run mypy
         run: uv run mypy .
   tests:
     runs-on: ubuntu-latest
     needs:
-      - build
+      - lints
     strategy:
       fail-fast: false
       matrix:

@@ -18,7 +18,12 @@ class Command:
     """
 
     def __init__(
-        self, name: Optional[str], description: Optional[str], func: Callable[..., T], *, is_root: bool = False
+        self,
+        name: Optional[str],
+        description: Optional[str],
+        func: Callable[..., T],
+        *,
+        is_root: bool = False,
     ) -> None:
         self.name: str = func.__name__ if name is None else name
         self.description = description
@@ -45,7 +50,10 @@ class Clite:
         self.commands: dict[str, Command] = {}
 
     def command(
-        self, name: Optional[str] = None, *, description: Optional[str] = None
+        self,
+        name: Optional[str] = None,
+        *,
+        description: Optional[str] = None,
     ) -> Callable[[Callable[P, T]], Callable[P, None]]:
         """Return wrapper function.
 
@@ -69,7 +77,10 @@ class Clite:
         return wrapper
 
     def root(
-        self, name: Optional[str] = None, *, description: Optional[str] = None
+        self,
+        name: Optional[str] = None,
+        *,
+        description: Optional[str] = None,
     ) -> Callable[[Callable[P, T]], Callable[P, None]]:
         """Return wrapper function.
 

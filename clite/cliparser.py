@@ -80,7 +80,9 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
 
 
 def analyse_signature(
-    func: Callable[P, T], arguments: tuple[str, ...], options: dict[str, str]
+    func: Callable[P, T],
+    arguments: tuple[str, ...],
+    options: dict[str, str],
 ) -> tuple[tuple[str, ...], dict[str, str]]:
     """Analyse the signature of the function.
 

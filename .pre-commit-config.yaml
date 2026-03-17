@@ -1,41 +1,61 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.19.1
-    hooks:
-      - id: mypy
-        args: [--config-file=./pyproject.toml]
-
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.6
-    hooks:
-      - id: ruff-check
-        args: [--fix, --quiet]
-      - id: ruff-format
-        args: [--quiet]
-
-  - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.3.1
-    hooks:
-      - id: black
-
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        name: isort (python)
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-      - id: check-yaml
-      - id: end-of-file-fixer
       - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: check-case-conflict
+      - id: check-ast
+      - id: check-toml
+      - id: check-yaml
+        exclude: 'mkdocs.yml'
 
-  - repo: meta
+  - repo: local
     hooks:
-      - id: check-useless-excludes
+      - id: ruff-check
+        name: ruff-check
+        entry: uv run ruff check --fix
+        language: python
+        types: [python]
+        require_serial: true
+        verbose: true
+        pass_filenames: false
 
-ci:
-  autofix_prs: true
-  autoupdate_schedule: weekly
-  submodules: false
+      - id: mypy
+        name: Mypy
+        entry: uv run mypy .
+        language: python
+        types: [python]
+        require_serial: true
+        verbose: true
+        pass_filenames: false
+
+      - id: ruff-format
+        name: ruff-format
+        entry: uv run ruff format
+        language: python
+        types: [python]
+        require_serial: true
+        verbose: true
+        pass_filenames: false
+
+      - id: black
+        name: black
+        entry: uv run black .
+        language: python
+        types: [python]
+        require_serial: true
+        verbose: true
+        pass_filenames: false
+
+      - id: isort
+        name: isort
+        entry: uv run isort .
+        language: python
+        types: [python]
+        require_serial: true
+        verbose: true
+        pass_filenames: false
+

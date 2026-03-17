@@ -36,9 +36,7 @@ def get_command(clite_instance: "Clite", argv: list[str]) -> tuple["Command", li
     raise CommandNotFoundError.format_message(argv[0])
 
 
-def parse_multiple_values(
-    argv: list[str],
-) -> tuple[str, ...]:
+def parse_multiple_values(argv: list[str]) -> tuple[str, ...]:
     """Parse multiple values."""
     values: list[str] = []
     for _, arg in enumerate(argv):
@@ -82,9 +80,7 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
 
 
 def analyse_signature(
-    func: Callable[P, T],
-    arguments: tuple[str, ...],
-    options: dict[str, str],
+    func: Callable[P, T], arguments: tuple[str, ...], options: dict[str, str]
 ) -> tuple[tuple[str, ...], dict[str, str]]:
     """Analyse the signature of the function.
 

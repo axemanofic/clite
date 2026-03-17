@@ -71,7 +71,7 @@ def test_arguments_error(runner: "CliRunner") -> None:
 
     result = runner.invoke(app, ["todo_list", "asdasd"])
 
-    assert result.exit_code == 1
+    assert result.exit_code == 2
 
 
 def test_flags(runner: "CliRunner") -> None:
@@ -106,7 +106,7 @@ def test_flags_error(runner: "CliRunner") -> None:
 
     result = runner.invoke(app, ["todo_list", "--flag_int=asdasd"])
 
-    assert result.exit_code == 1
+    assert result.exit_code == 2
 
 
 def test_mixed(runner: "CliRunner") -> None:

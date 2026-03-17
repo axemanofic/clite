@@ -2,6 +2,8 @@ from typing import Optional
 
 
 class BaseType:
+    """Base class."""
+
     def __init__(
         self,
         name: str,
@@ -14,14 +16,17 @@ class BaseType:
         self.nargs = nargs
 
     def __repr__(self) -> str:
+        """Return the name of the parameter."""
         return self.name
 
 
 class Argument(BaseType):
-    pass
+    """Argument class."""
 
 
 class Option(BaseType):
+    """Option class."""
+
     def __init__(
         self,
         name: str,

@@ -15,8 +15,7 @@ class ParamType:
         raise NotImplementedError
 
     def __repr__(self) -> str:
-        """
-        Return the type of the parameter.
+        """Return the type of the parameter.
 
         :return: type of the parameter
         """

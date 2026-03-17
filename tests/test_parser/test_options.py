@@ -1,6 +1,6 @@
 import pytest
 
-from clite.parser import parse_command_line
+from clite.cliparser import parse_command_line
 
 
 @pytest.mark.parametrize(

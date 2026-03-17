@@ -1,7 +1,7 @@
 from typing import Annotated
 
+from clite.clityping import Argument
 from clite.testing import CliRunner
-from clite.typing import Argument
 
 
 def test_arguments(runner: "CliRunner") -> None:
@@ -36,4 +36,4 @@ def test_arguments_bad(runner: "CliRunner") -> None:
 
     result = runner.invoke(app, ["todo_list", "dasd"])
 
-    assert result.exit_code == 1
+    assert result.exit_code == 2

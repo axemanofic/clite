@@ -163,3 +163,5 @@ cython_debug/
 
 # GigaIDE
 .gigaide/
+.playground/
+mise.local.toml

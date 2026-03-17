@@ -19,5 +19,5 @@ def tests(session: "Session") -> None:
 def lint(session: "Session") -> None:
     """Run all linters."""
     session.install("ruff", "mypy")
-    # session.run("ruff", "check", ".")
-    session.run("mypy", ".", "-v")
+    session.run("ruff", "check", ".")
+    session.run("mypy", ".")

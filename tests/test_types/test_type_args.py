@@ -1,7 +1,7 @@
 from typing import Annotated
 
+from clite.clityping import Argument
 from clite.testing import CliRunner
-from clite.typing import Argument
 
 
 def test_arguments(runner: "CliRunner") -> None:

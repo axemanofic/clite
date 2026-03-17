@@ -2,9 +2,9 @@ import sys
 from typing import Any, Callable, Optional, TypeVar
 
 from ._typing import ParamSpec
+from .cliparser import analyse_signature, get_command, parse_command_line
 from .errors import CliteError, RootCommandNotFoundError
 from .helper import Helper
-from .parser import analyse_signature, get_command, parse_command_line
 from .utils import echo
 
 P = ParamSpec("P")

@@ -79,6 +79,7 @@ line_length = 120
 [tool.mypy]
 strict = true
 ignore_missing_imports = true
+exclude = ["tests/", "noxfile.py"]
 
 [[tool.mypy.overrides]]
 module = "tests.*"

@@ -39,13 +39,12 @@ def get_command(clite_instance: "Clite", argv: list[str]) -> tuple["Command", li
 def parse_multiple_values(
     argv: list[str],
 ) -> tuple[str, ...]:
+    """Parse multiple values."""
     values: list[str] = []
-    for idx, arg in enumerate(argv):
+    for _, arg in enumerate(argv):
         if arg.startswith("-"):
             break
-        if arg.startswith('"') and arg.endswith('"'):
-            arg = arg[1:-1]
-        elif arg.startswith("'") and arg.endswith("'"):
+        if (arg.startswith('"') and arg.endswith('"')) or (arg.startswith("'") and arg.endswith("'")):
             arg = arg[1:-1]
         values.append(arg)
     return tuple(values)
@@ -58,7 +57,6 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
     :return: tuple of arguments and options
     """
     arguments: list[str] = []
-    # arguments = {}
     options = {}
 
     for idx, arg in enumerate(argv):
@@ -71,9 +69,7 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
             except ValueError:
                 option = arg[2:]
                 value = argv[idx + 1]
-            if value.startswith('"') and value.endswith('"'):
-                value = value[1:-1]
-            elif value.startswith("'") and value.endswith("'"):
+            if (value.startswith('"') and value.endswith('"')) or (value.startswith("'") and value.endswith("'")):
                 value = value[1:-1]
             options[option] = value
         elif arg.startswith("-"):
@@ -97,8 +93,6 @@ def analyse_signature(
     :param options: dictionary of options
     :return: tuple of arguments and options
     """
-    from typing import get_type_hints
-
     signature = inspect.signature(func)
 
     bound_arguments = signature.bind(*arguments, **options)

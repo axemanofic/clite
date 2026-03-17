@@ -1,7 +1,7 @@
 from typing import Annotated
 
+from clite.clityping import Option
 from clite.testing import CliRunner
-from clite.typing import Option
 
 
 def test_flags(runner: "CliRunner") -> None:

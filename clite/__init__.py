@@ -3,4 +3,4 @@ from .testing import CliRunner as CliRunner
 from .testing import Result as Result
 from .utils import echo
 
-__all__ = ["Clite", "Command", "CliRunner", "Result", "echo"]
+__all__ = ["CliRunner", "Clite", "Command", "Result", "echo"]

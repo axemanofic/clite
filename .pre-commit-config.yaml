@@ -1,0 +1,47 @@
+repos:
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: uv run mypy .
+        language: system
+        pass_filenames: true
+      - id: ruff
+        name: ruff
+        entry: uv run ruff check .
+        language: system
+        pass_filenames: true
+      - id: black
+        name: black
+        entry: uv run black .
+        language: system
+        pass_filenames: true
+      - id: isort
+        name: isort
+        entry: uv run isort .
+        language: system
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-xml
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-illegal-windows-names
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: check-case-conflict
+
+  # Should be the last:
+  - repo: meta
+    hooks:
+      - id: check-useless-excludes
+
+ci:
+  autofix_prs: true
+  autoupdate_schedule: weekly
+  submodules: false

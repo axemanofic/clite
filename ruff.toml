@@ -93,6 +93,6 @@ extend-ignore = ["D104", "D100", "D107"]
 # Whether to format code snippets in docstrings.
 # When this is enabled, Python code examples within docstrings are automatically reformatted.
 docstring-code-format = true
-# Ruff uses existing trailing commas as an indication that short lines should be left separate. 
+# Ruff uses existing trailing commas as an indication that short lines should be left separate.
 # If this option is set to true, the magic trailing comma is ignored.
 skip-magic-trailing-comma = true

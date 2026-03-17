@@ -1,5 +1,5 @@
 <div align="center">
-    <h1> Clite </h1> 
+    <h1> Clite </h1>
     <img alt="Clite" src="https://axemanofic.github.io/clite/assets/background.webp">
     <p>A zero-dependency package for building CLIs. Based on type hints.</p>
     <p>The name is inspired by the <a href="https://www.sqlite.org/">SQLite</a></p>
@@ -16,7 +16,7 @@
 
 ---
 
-!!! warning 
+!!! warning
     This package is currently under development.
 
 ## Installation

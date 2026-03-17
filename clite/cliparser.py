@@ -36,9 +36,7 @@ def get_command(clite_instance: "Clite", argv: list[str]) -> tuple["Command", li
     raise CommandNotFoundError.format_message(argv[0])
 
 
-def parse_multiple_values(
-    argv: list[str],
-) -> tuple[str, ...]:
+def parse_multiple_values(argv: list[str]) -> tuple[str, ...]:
     """Parse multiple values."""
     values: list[str] = []
     for _, arg in enumerate(argv):

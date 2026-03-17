@@ -44,12 +44,7 @@ class Clite:
     Class containing all the commands
     """
 
-    def __init__(
-        self,
-        name: Optional[str] = None,
-        *,
-        description: Optional[str] = None,
-    ) -> None:
+    def __init__(self, name: Optional[str] = None, *, description: Optional[str] = None) -> None:
         self.name = "clite" if name is None else name.lower()
         self.description = description
         self.commands: dict[str, Command] = {}

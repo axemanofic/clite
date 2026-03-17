@@ -8,7 +8,7 @@ version = "0.2.2"
 description = "Small package for creating command line interfaces"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["typing-extensions>=4.12.2"]
+dependencies = ["pre-commit>=4.3.0", "typing-extensions>=4.12.2"]
 authors = [{ name = "Roman Sotnikov", email = "axemanofic@gmail.com" }]
 maintainers = [{ name = "Roman Sotnikov", email = "axemanofic@gmail.com" }]
 license = { file = "LICENSE" }

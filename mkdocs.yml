@@ -56,7 +56,7 @@ plugins:
           options:
             extensions:
               - griffe_typingdoc
-            # General 
+            # General
             allow_inspection: false
             show_bases: true
             show_source: false

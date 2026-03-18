@@ -8,7 +8,7 @@ version = "0.2.2"
 description = "Small package for creating command line interfaces"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["typing-extensions>=4.12.2"]
+dependencies = ["pre-commit>=4.3.0", "typing-extensions>=4.12.2"]
 authors = [{ name = "Roman Sotnikov", email = "axemanofic@gmail.com" }]
 maintainers = [{ name = "Roman Sotnikov", email = "axemanofic@gmail.com" }]
 license = { file = "LICENSE" }
@@ -46,7 +46,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "httphttps://axemanofic.github.io/clite"
+Homepage = "https://axemanofic.github.io/clite"
 Documentation = "https://axemanofic.github.io/clite"
 Repository = "https://github.com/axemanofic/clite.git"
 Issues = "https://github.com/axemanofic/clite/issues"
@@ -54,13 +54,13 @@ Changelog = "https://github.com/axemanofic/clite/blob/master/CHANGELOG.md"
 
 [dependency-groups]
 dev = [
-  "black>=25.1.0",
   "git-cliff>=2.8.0",
+  "black>=25.1.0",
   "isort>=5.13.2",
-  "mypy>=1.14.1",
   "ruff>=0.9.0",
+  "mypy>=1.18.2",
 ]
-tests = ["pytest>=8.3.4"]
+tests = ["nox>=2025.5.1", "pytest>=8.3.4"]
 docs = [
   "griffe-typingdoc>=0.2.8",
   "mkdocs-material>=9.6.9",
@@ -78,3 +78,14 @@ line_length = 120
 
 [tool.mypy]
 strict = true
+ignore_missing_imports = true
+exclude = ["tests/", "noxfile.py"]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+warn_unused_ignores = false
+
+[[tool.mypy.overrides]]
+module = "noxfile"
+warn_unreachable = false
+disallow_untyped_decorators = false

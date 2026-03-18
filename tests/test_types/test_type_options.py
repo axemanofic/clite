@@ -1,7 +1,7 @@
 from typing import Annotated
 
+from clite.clityping import Option
 from clite.testing import CliRunner
-from clite.typing import Option
 
 
 def test_flags(runner: "CliRunner") -> None:
@@ -36,4 +36,4 @@ def test_flags_error(runner: "CliRunner") -> None:
 
     result = runner.invoke(app, ["todo_list", "--flag_int=asdasd"])
 
-    assert result.exit_code == 1
+    assert result.exit_code == 2

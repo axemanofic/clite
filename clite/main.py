@@ -1,10 +1,11 @@
 import sys
 from typing import Any, Callable, Optional, TypeVar
 
-from typing_extensions import ParamSpec
-
-from clite.errors import CliteError
-from clite.parser import analyse_signature, get_command, parse_command_line
+from ._typing import ParamSpec
+from .cliparser import analyse_signature, get_command, parse_command_line
+from .errors import CliteError, RootCommandNotFoundError
+from .helper import Helper
+from .utils import echo
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -16,10 +17,18 @@ class Command:
     Class describing the command to be executed
     """
 
-    def __init__(self, name: Optional[str], description: Optional[str], func: Callable[..., T]) -> None:
+    def __init__(
+        self,
+        name: Optional[str],
+        description: Optional[str],
+        func: Callable[..., T],
+        *,
+        is_root: bool = False,
+    ) -> None:
         self.name: str = func.__name__ if name is None else name
         self.description = description
         self.func = func
+        self.is_root = is_root
 
     def __repr__(self) -> str:
         """Return the name of the command.
@@ -35,12 +44,7 @@ class Clite:
     Class containing all the commands
     """
 
-    def __init__(
-        self,
-        name: Optional[str] = None,
-        *,
-        description: Optional[str] = None,
-    ) -> None:
+    def __init__(self, name: Optional[str] = None, *, description: Optional[str] = None) -> None:
         self.name = "clite" if name is None else name.lower()
         self.description = description
         self.commands: dict[str, Command] = {}
@@ -72,6 +76,33 @@ class Clite:
 
         return wrapper
 
+    def root(
+        self,
+        name: Optional[str] = None,
+        *,
+        description: Optional[str] = None,
+    ) -> Callable[[Callable[P, T]], Callable[P, None]]:
+        """Return wrapper function.
+
+        :param name: name of the command
+        :param description: description of the command.
+        :return: wrapped function
+        """
+
+        def wrapper(func: Callable[P, T]) -> Callable[..., Any]:
+            """Return wrapped function.
+
+            Adds the root command to the dictionary of commands
+
+            :param func: function to be wrapped
+            :return: wrapped function
+            """
+            cmd = Command(name, description, func, is_root=True)
+            self.commands[f"{self}:{cmd}"] = cmd
+            return func
+
+        return wrapper
+
     def _run(self, argv: list[str]) -> None:
         """Run the command.
 
@@ -80,11 +111,26 @@ class Clite:
         :param argv: list of arguments
         :return: exit code
         """
-        if argv:
+        if not argv:
+            argv = ["root"]
+
+        try:
             cmd, argv = get_command(self, argv)
-            arguments, flags = parse_command_line(argv)
-            arguments, flags = analyse_signature(cmd.func, arguments, flags)
-            cmd.func(*arguments, **flags)
+        except RootCommandNotFoundError:
+            h = Helper()
+            h.create_help_clite(self)
+            return
+
+        arguments, flags = parse_command_line(argv)
+
+        if "help" in flags:
+            h = Helper()
+            h.create_help_command(cmd)
+            return
+
+        arguments, flags = analyse_signature(cmd.func, arguments, flags)
+
+        cmd.func(*arguments, **flags)
 
     def __repr__(self) -> str:
         """Return the name of the app.
@@ -100,7 +146,8 @@ class Clite:
         """
         try:
             self._run(sys.argv[1:])
-        except CliteError:
-            return 1
+        except CliteError as err:
+            echo(err.__str__(), file=sys.stderr)
+            return err.exit_code
         else:
             return 0

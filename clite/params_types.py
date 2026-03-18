@@ -6,9 +6,10 @@ from .errors import BadParameterError
 class ParamType:
     """Base class for parameter types."""
 
-    def __init__(self, *, param_name: str, value: str) -> None:
+    def __init__(self, *, param_name: str, value: str, is_optional: bool) -> None:
         self.param_name = param_name
         self.value = value
+        self.is_optional = is_optional
 
     def covert(self) -> Any:  # noqa: ANN401
         """Convert the value to the desired type."""
@@ -27,14 +28,17 @@ class IntegerType(ParamType):
 
     def __repr__(self) -> str:
         """Return the type of the parameter."""
-        return "INTEGER"
+        return f"INTEGER({self.param_name}:{self.value})"
 
     def covert(self) -> int:
         """Convert the value to an integer."""
         try:
             return int(self.value)
         except ValueError as exc:
-            raise BadParameterError.format_message(param_hint=self.param_name, message=self.value) from exc
+            raise BadParameterError(
+                param_hint=self.param_name,
+                message=self.value,
+            ) from exc
 
 
 class StringType(ParamType):
@@ -42,7 +46,7 @@ class StringType(ParamType):
 
     def __repr__(self) -> str:
         """Return the type of the parameter."""
-        return "STRING"
+        return f"STRING({self.param_name}:{self.value})"
 
     def covert(self) -> str:
         """Convert the value to a string."""
@@ -54,7 +58,7 @@ class BoolType(ParamType):
 
     def __repr__(self) -> str:
         """Return the type of the parameter."""
-        return "BOOLEAN"
+        return f"BOOLEAN({self.param_name}:{self.value})"
 
     def covert(self) -> bool:
         """Convert the value to a boolean."""
@@ -63,7 +67,7 @@ class BoolType(ParamType):
             return True
         if value in ("0", "false", "f", "no", "n", "off"):
             return False
-        raise BadParameterError.format_message(param_hint=self.param_name, message=self.value)
+        raise BadParameterError(param_hint=self.param_name, message=self.value)
 
 
 class FloatType(ParamType):
@@ -71,24 +75,24 @@ class FloatType(ParamType):
 
     def __repr__(self) -> str:
         """Return the type of the parameter."""
-        return "FLOAT"
+        return f"FLOAT({self.param_name}:{self.value})"
 
     def covert(self) -> float:
         """Convert the value to a float."""
         try:
             return float(self.value)
         except ValueError as exc:
-            raise BadParameterError.format_message(param_hint=self.param_name, message=self.value) from exc
+            raise BadParameterError(param_hint=self.param_name, message=self.value) from exc
 
 
-def covert_type(*, param_name: str, value: str, annotation: type) -> ParamType:
+def covert_type(*, param_name: str, value: str, is_optional: bool, annotation: type) -> ParamType:
     """Convert the value to the desired type."""
     if annotation is int:
-        return IntegerType(param_name=param_name, value=value)
+        return IntegerType(param_name=param_name, value=value, is_optional=is_optional)
     if annotation is bool:
-        return BoolType(param_name=param_name, value=value)
+        return BoolType(param_name=param_name, value=value, is_optional=is_optional)
     if annotation is float:
-        return FloatType(param_name=param_name, value=value)
+        return FloatType(param_name=param_name, value=value, is_optional=is_optional)
     if annotation is str:
-        return StringType(param_name=param_name, value=value)
-    return StringType(param_name=param_name, value=value)
+        return StringType(param_name=param_name, value=value, is_optional=is_optional)
+    return StringType(param_name=param_name, value=value, is_optional=is_optional)

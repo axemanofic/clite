@@ -2,8 +2,8 @@ import sys
 from typing import Any, Callable, Optional, TypeVar
 
 from ._typing import ParamSpec
-from .cliparser import analyse_signature, get_command, parse_command_line
-from .errors import CliteError, RootCommandNotFoundError
+from .cliparser import analyse_signature, get_command, parse_command_line, parse_command_line2
+from .errors import CliteError, MissingRequiredParameterError, RootCommandNotFoundError
 from .helper import Helper
 from .utils import echo
 
@@ -121,16 +121,37 @@ class Clite:
             h.create_help_clite(self)
             return
 
-        arguments, flags = parse_command_line(argv)
+        params = analyse_signature(cmd.func)
 
-        if "help" in flags:
-            h = Helper()
-            h.create_help_command(cmd)
-            return
+        arguments = parse_command_line2(argv)
 
-        arguments, flags = analyse_signature(cmd.func, arguments, flags)
+        print(params, arguments)
 
-        cmd.func(*arguments, **flags)
+        args: list[Any, ...] = []
+        kwargs: dict[str, Any] = {}
+
+        for p in params:
+            while len(arguments) > 0:
+                a = arguments.popleft()
+                p.value = a.value
+                v = p.covert()
+                if p.is_optional:
+                    kwargs[p.param_name] = v
+                else:
+                    args.append(v)
+                break
+            if p.value == "":
+                raise MissingRequiredParameterError(p.param_name)
+            if p.is_optional:
+                kwargs[p.param_name] = p.covert()
+        # if "help" in flags:
+        #     h = Helper()
+        #     h.create_help_command(cmd)
+        #     return
+
+        print(args, kwargs)
+
+        cmd.func(*args, **kwargs)
 
     def __repr__(self) -> str:
         """Return the name of the app.

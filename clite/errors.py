@@ -19,13 +19,8 @@ class RootCommandNotFoundError(CliteError):
 
     exit_code = ExitCode.SHELL
 
-    @classmethod
-    def format_message(cls, message: str) -> "RootCommandNotFoundError":
-        """Format error message.
-
-        :return: RootCommandNotFoundError instance with formatted message
-        """
-        return cls(f"Root command not found: {message}")
+    def __init__(self, message: str) -> None:
+        super().__init__(f"Root command not found: {message}")
 
 
 class CommandNotFoundError(CliteError):
@@ -33,13 +28,8 @@ class CommandNotFoundError(CliteError):
 
     exit_code = ExitCode.SHELL
 
-    @classmethod
-    def format_message(cls, message: str) -> "CommandNotFoundError":
-        """Format error message.
-
-        :return: CommandNotFoundError instance with formatted message
-        """
-        return cls(f"Command not found: {message}")
+    def __init__(self, message: str) -> None:
+        super().__init__(f"Command not found: {message}")
 
 
 class BadParameterError(CliteError):
@@ -47,10 +37,14 @@ class BadParameterError(CliteError):
 
     exit_code = ExitCode.SHELL
 
-    @classmethod
-    def format_message(cls, param_hint: str, message: str) -> "BadParameterError":
-        """Format error message.
+    def __init__(self, param_hint: str, message: str) -> None:
+        super().__init__(f"Invalid value for '{param_hint}': {message}")
 
-        :return: BadParameter instance with formatted message
-        """
-        return cls(f"Invalid value for {param_hint}: {message}")
+
+class MissingRequiredParameterError(CliteError):
+    """Missing required parameter error."""
+
+    exit_code = ExitCode.SHELL
+
+    def __init__(self, param_hint: str) -> None:
+        super().__init__(f"Missing required parameter: {param_hint}")

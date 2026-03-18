@@ -1,9 +1,10 @@
 import inspect
-from typing import TYPE_CHECKING, Annotated, Callable, TypeVar, get_args, get_origin
+from collections import deque
+from typing import TYPE_CHECKING, Annotated, Any, Callable, TypeVar, get_args, get_origin, get_type_hints
 
 from ._typing import ParamSpec, TypeAlias
 from .errors import CommandNotFoundError, RootCommandNotFoundError
-from .params_types import covert_type
+from .params_types import ParamType, covert_type
 
 if TYPE_CHECKING:
     from clite import Clite
@@ -29,11 +30,11 @@ def get_command(clite_instance: "Clite", argv: list[str]) -> tuple["Command", li
     cmd = clite_instance.commands.get(cmd_key)
 
     if argv[0] == "root" and cmd is None:
-        raise RootCommandNotFoundError.format_message(argv[0])
+        raise RootCommandNotFoundError(argv[0])
 
     if cmd:
         return cmd, argv[1:]
-    raise CommandNotFoundError.format_message(argv[0])
+    raise CommandNotFoundError(argv[0])
 
 
 def parse_multiple_values(argv: list[str]) -> tuple[str, ...]:
@@ -81,9 +82,7 @@ def parse_command_line(argv: list[str]) -> tuple[Args, Options]:
 
 def analyse_signature(
     func: Callable[P, T],
-    arguments: tuple[str, ...],
-    options: dict[str, str],
-) -> tuple[tuple[str, ...], dict[str, str]]:
+) -> tuple[ParamType, ...]:
     """Analyse the signature of the function.
 
     :param func: function to be analysed
@@ -93,23 +92,65 @@ def analyse_signature(
     """
     signature = inspect.signature(func)
 
-    bound_arguments = signature.bind(*arguments, **options)
-    bound_arguments.apply_defaults()
+    bound_arguments: list[ParamType] = []
 
-    for param_name, value in bound_arguments.arguments.items():
+    for param_name, value in signature.parameters.items():
         annotation = signature.parameters[param_name].annotation
         origin = get_origin(annotation)
         if origin is Annotated:
             annotation = get_args(annotation)[0]
-        value = covert_type(param_name=param_name, value=value, annotation=annotation).covert()
-        bound_arguments.arguments[param_name] = value
 
-    for param_name, value in bound_arguments.kwargs.items():
-        annotation = signature.parameters[param_name].annotation
-        origin = get_origin(annotation)
-        if origin is Annotated:
-            annotation = get_args(annotation)[0]
-        value = covert_type(param_name=param_name, value=value, annotation=annotation).covert()
-        bound_arguments.kwargs[param_name] = value
+        value_type = None
+        if value.default is inspect.Parameter.empty:
+            value_type = covert_type(
+                param_name=param_name,
+                value="",
+                is_optional=False,
+                annotation=annotation,
+            )
+        else:
+            value_type = covert_type(
+                param_name=param_name,
+                value=str(value.default),
+                is_optional=True,
+                annotation=annotation,
+            )
+        bound_arguments.append(value_type)
 
-    return bound_arguments.args, bound_arguments.kwargs
+    return tuple(bound_arguments)
+
+
+class ArgMeta:
+    def __init__(self, *, name: str | None, value: str) -> None:
+        self.name = name
+        self.value = value
+
+
+def parse_command_line2(argv: list[str]) -> deque[ArgMeta]:
+    """Parse the command line.
+
+    :param argv: list of arguments
+    :return: tuple of arguments and options
+    """
+
+    args = []
+
+    for idx, arg in enumerate(argv):
+        if arg in ("-h", "--help"):
+            args.append(ArgMeta(name="help", value=""))
+            break
+        if arg.startswith("--"):
+            try:
+                option, value = arg[2:].split("=", maxsplit=1)
+            except ValueError:
+                option = arg[2:]
+                value = argv[idx + 1]
+            if (value.startswith('"') and value.endswith('"')) or (value.startswith("'") and value.endswith("'")):
+                value = value[1:-1]
+            args.append(ArgMeta(name=option, value=value))
+        elif arg.startswith("-"):
+            option = arg[1:]
+            args.append(ArgMeta(name=option, value=value))
+        else:
+            args.append(ArgMeta(name=None, value=arg))
+    return deque(args)

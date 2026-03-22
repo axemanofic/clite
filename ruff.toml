@@ -4,7 +4,7 @@ fix = false
 show-fixes = false
 output-format = "grouped"
 target-version = "py39"
-extend-exclude = ["get_started.py", "tests"]
+extend-exclude = ["tests", "examples"]
 
 [lint]
 # Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that

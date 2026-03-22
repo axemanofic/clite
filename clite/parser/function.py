@@ -1,9 +1,12 @@
 import inspect
-from collections.abc import MutableMapping
-from typing import Annotated, Callable, TypeVar, get_args, get_origin
+from typing import TYPE_CHECKING, Annotated, Callable, TypeVar, get_args, get_origin
 
 from clite._types import Any, Empty, Mapping
 from clite._typing import ParamSpec
+
+if TYPE_CHECKING:
+    from clite._types import MutableMapping
+
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -19,11 +22,13 @@ class ParameterInfo:
         value: Any | None,
         annotation: Any,
         is_optional: bool = False,
+        short_name: str | None = None,
     ) -> None:
         self.name = name
         self.value = value
         self.annotation = annotation
         self.is_optional = is_optional
+        self.short_name = short_name
 
     def __repr__(self) -> str:
         """Return the type of the parameter.
@@ -38,6 +43,15 @@ class ParameterInfo:
         :return: type of the parameter
         """
         return self.__repr__()
+
+    def names(self) -> tuple[str, ...]:
+        """Return the names of the parameter.
+
+        :return: names of the parameter
+        """
+        if self.short_name is None:
+            return (self.name,)
+        return (self.name, self.short_name)
 
 
 class ArgumentInfo(ParameterInfo):
@@ -56,6 +70,7 @@ class ArgumentInfo(ParameterInfo):
             value=value,
             annotation=annotation,
             is_optional=is_optional,
+            short_name=None,
         )
 
 
@@ -69,12 +84,14 @@ class OptionInfo(ParameterInfo):
         value: Any | None,
         annotation: Any,
         is_optional: bool = True,
+        short_name: str | None = None,
     ) -> None:
         super().__init__(
             name=name,
             value=value,
             annotation=annotation,
             is_optional=is_optional,
+            short_name=short_name,
         )
 
 

@@ -19,7 +19,7 @@ def mapping_param_and_meta(
         arg = arguments.popleft()
 
         for _, p in params.items():
-            if p.is_optional and arg.is_optional and arg.name in [p.name]:
+            if p.is_optional and arg.is_optional and arg.name in p.names():
                 p.value = arg.value
                 continue
 

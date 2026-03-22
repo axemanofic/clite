@@ -1,4 +1,4 @@
-from clite import Clite
+from clite import Clite, echo
 
 app = Clite(
     name="myapp",
@@ -8,7 +8,7 @@ app = Clite(
 
 @app.command()
 def hello(name: str) -> None:
-    print(f"Hello, {name}!")
+    echo(f"Hello, {name}!")
 
 
 if __name__ == "__main__":

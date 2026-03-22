@@ -1,4 +1,4 @@
-from clite import Clite
+from clite import Clite, echo
 
 app = Clite(
     name="myapp",
@@ -9,20 +9,20 @@ app = Clite(
 @app.command()
 def hello(name: int, *, verbose: bool = False) -> None:
     if verbose:
-        print("Verbose mode is on")
-    print(f"Hello, {name}!")
+        echo("Verbose mode is on")
+    echo(f"Hello, {name}!")
 
 
 @app.command()
 def helloargs(name: str, second: str, *, verbose: bool = False) -> None:
     if verbose:
-        print("Verbose mode is on")
-    print(f"Hello, {name} {second}!")
+        echo("Verbose mode is on")
+    echo(f"Hello, {name} {second}!")
 
 
 @app.command()
 def helloempty() -> None:
-    print("Hello, world!")
+    echo("Hello, world!")
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ from .errors import BadParameterError
 class ParamType:
     """Base class for parameter types."""
 
-    def __init__(self, *, param_name: str, value: Any | None) -> None:
+    def __init__(self, *, param_name: str, value: str) -> None:
         self.param_name = param_name
         self.value = value
 
@@ -65,7 +65,10 @@ class BoolType(ParamType):
             return True
         if value in ("0", "false", "f", "no", "n", "off"):
             return False
-        raise BadParameterError(param_hint=self.param_name, message=self.value)
+        raise BadParameterError(
+            param_hint=self.param_name,
+            message=self.value,
+        )
 
 
 class FloatType(ParamType):
@@ -80,4 +83,7 @@ class FloatType(ParamType):
         try:
             return float(self.value)
         except ValueError as exc:
-            raise BadParameterError(param_hint=self.param_name, message=self.value) from exc
+            raise BadParameterError(
+                param_hint=self.param_name,
+                message=self.value,
+            ) from exc

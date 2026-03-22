@@ -46,8 +46,6 @@ def parse_opt(*, opt: str, is_short: bool = False) -> Sequence[ArgumentMeta]:
     if value is not None:
         value = replace_quotes(value)
 
-    print(name, value, "parse_opt")
-
     if is_short and len(name) > 1:
         for n in name:
             opts.append(
@@ -73,8 +71,6 @@ def parse_argv(argv: Sequence[str]) -> MutableSequence[ArgumentMeta]:
     argvd: deque[str] = deque(argv)
 
     argv_pipe: MutableSequence[ArgumentMeta] = []
-
-    print(argvd, "argvd")
 
     while len(argvd) > 0:
         arg = argvd.popleft()
@@ -106,7 +102,5 @@ def parse_argv(argv: Sequence[str]) -> MutableSequence[ArgumentMeta]:
                 is_optional=False,
             ),
         )
-
-    print(argv_pipe, "argv_pipe")
 
     return argv_pipe

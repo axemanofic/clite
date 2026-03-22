@@ -1,10 +1,7 @@
-from typing import Optional
-
-
 class BaseType:
     """Base class."""
 
-    def __init__(self, name: str, *, description: Optional[str] = None, nargs: int = 1) -> None:
+    def __init__(self, name: str, *, description: str | None = None, nargs: int = 1) -> None:
         self.name = name
         self.description = description
         self.nargs = nargs
@@ -21,6 +18,6 @@ class Argument(BaseType):
 class Option(BaseType):
     """Option class."""
 
-    def __init__(self, name: str, *, description: Optional[str] = None, default: Optional[str] = None) -> None:
+    def __init__(self, name: str, *, description: str | None = None, default: str | None = None) -> None:
         super().__init__(name, description=description)
         self.default = default

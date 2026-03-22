@@ -59,7 +59,13 @@ dev = [
   "ruff>=0.9.0",
   "mypy>=1.18.2",
 ]
-tests = ["nox>=2025.5.1", "pytest>=8.3.4"]
+tests = [
+  "coverage>=7.13.5",
+  "nox>=2025.5.1",
+  "pytest>=8.3.4",
+  "pytest-cov>=7.1.0",
+  "smokeshow>=0.5.0",
+]
 docs = [
   "griffe-typingdoc>=0.2.8",
   "mkdocs-material>=9.6.9",
@@ -88,3 +94,15 @@ warn_unused_ignores = false
 module = "noxfile"
 warn_unreachable = false
 disallow_untyped_decorators = false
+
+[tool.coverage.run]
+source = ["clite", "tests"]
+branch = true
+omit = ["noxfile.py", "examples/*", "docs/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+
+[tool.coverage.html]
+directory = "htmlcov"

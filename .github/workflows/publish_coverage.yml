@@ -3,7 +3,7 @@ name: Publish tests coverage to Smokeshow and set coverage % status to commit
 on:
   push:
     branches:
-      - main
+      - master
 
 permissions:
   statuses: write

@@ -1,10 +1,15 @@
 import sys
 from typing import Any, Callable, Optional, TypeVar
 
+from ._types import Sequence
 from ._typing import ParamSpec
-from .cliparser import analyse_signature, get_command, parse_command_line
+from .converter import convert_params_value
 from .errors import CliteError, RootCommandNotFoundError
 from .helper import Helper
+from .mapping import mapping_param_and_meta
+from .parser.arguments import parse_argv
+from .parser.commands import get_command
+from .parser.function import analyse_signature
 from .utils import echo
 
 P = ParamSpec("P")
@@ -44,7 +49,12 @@ class Clite:
     Class containing all the commands
     """
 
-    def __init__(self, name: Optional[str] = None, *, description: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        name: Optional[str] = None,
+        *,
+        description: Optional[str] = None,
+    ) -> None:
         self.name = "clite" if name is None else name.lower()
         self.description = description
         self.commands: dict[str, Command] = {}
@@ -103,7 +113,7 @@ class Clite:
 
         return wrapper
 
-    def _run(self, argv: list[str]) -> None:
+    def _run(self, argv: Sequence[str]) -> None:
         """Run the command.
 
         ALl magic happens here
@@ -121,16 +131,28 @@ class Clite:
             h.create_help_clite(self)
             return
 
-        arguments, flags = parse_command_line(argv)
+        arguments = parse_argv(argv)
 
-        if "help" in flags:
-            h = Helper()
-            h.create_help_command(cmd)
-            return
+        for arg in arguments:
+            if arg.name == "help":
+                h = Helper()
+                h.create_help_command(cmd)
+                return
 
-        arguments, flags = analyse_signature(cmd.func, arguments, flags)
+        params = analyse_signature(cmd.func)
 
-        cmd.func(*arguments, **flags)
+        params = mapping_param_and_meta(params, arguments)
+        params = convert_params_value(params)
+
+        args: list[Any] = []
+        kwargs: dict[str, Any] = {}
+        for _, p in params.items():
+            if p.is_optional:
+                kwargs[p.name] = p.value
+            else:
+                args.append(p.value)
+
+        cmd.func(*args, **kwargs)
 
     def __repr__(self) -> str:
         """Return the name of the app.

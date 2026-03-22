@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, get_type_hints
 
-from .params_types import covert_type
+from .converter import covert_type
 from .utils import echo
 
 if TYPE_CHECKING:

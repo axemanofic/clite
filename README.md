@@ -5,13 +5,13 @@
 </div>
 
 <div align="center">
-![PyPI - Downloads](https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=89dceb)
-![PyPI - Version](https://img.shields.io/pypi/v/clite?style=for-the-badge&color=b4befe)
-![PyPI - Status](https://img.shields.io/pypi/status/clite?style=for-the-badge&color=89dceb)
-![PyPI - License](https://img.shields.io/pypi/l/clite?style=for-the-badge&color=74c7ec)
-![PyPI - Types](https://img.shields.io/pypi/types/clite?style=for-the-badge&color=94e2d5)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=f9e2af)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/axemanofic/clite/test.yml?branch=master&event=push&style=for-the-badge&color=a6e3a1)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=89dceb)]()
+[![PyPI - Version](https://img.shields.io/pypi/v/clite?style=for-the-badge&color=b4befe)](https://pypi.org/project/clite/)
+[![PyPI - Status](https://img.shields.io/pypi/status/clite?style=for-the-badge&color=89dceb)](https://pypi.org/project/clite/#data)
+[![PyPI - License](https://img.shields.io/pypi/l/clite?style=for-the-badge&color=74c7ec)](https://pypi.org/project/clite/#data)
+[![PyPI - Types](https://img.shields.io/pypi/types/clite?style=for-the-badge&color=94e2d5)](https://pypi.org/project/clite/#data)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=f9e2af)](https://pypi.org/project/clite/)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/axemanofic/clite/test.yml?branch=master&event=push&style=for-the-badge&color=a6e3a1)](https://github.com/axemanofic/clite/actions/workflows/test.yml)
 </div>
 
 ---

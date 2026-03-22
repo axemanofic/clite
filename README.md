@@ -2,11 +2,15 @@
     <img alt="Clite" src="https://axemanofic.github.io/clite/assets/background.webp">
     <p>A zero-dependency package for building CLIs. Based on type hints.</p>
     <p>The name is inspired by the <a href="https://www.sqlite.org/">SQLite</a></p>
-    <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/clite?pypiBaseUrl=https%3A%2F%2Fpypi.org&style=for-the-badge&color=dc8a78">
-    <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=dd7878">
-    <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=ea76cb">
-    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/axemanofic/clite/test.yml?branch=master&event=push&style=for-the-badge&color=a6e3a1">
 </div>
+
+![PyPI - Downloads](https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=89dceb)
+![PyPI - Version](https://img.shields.io/pypi/v/clite?style=for-the-badge&color=b4befe)
+![PyPI - Status](https://img.shields.io/pypi/status/clite?style=for-the-badge&color=89dceb)
+![PyPI - License](https://img.shields.io/pypi/l/clite?style=for-the-badge&color=74c7ec)
+![PyPI - Types](https://img.shields.io/pypi/types/clite?style=for-the-badge&color=94e2d5)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=f9e2af)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/axemanofic/clite/test.yml?branch=master&event=push&style=for-the-badge&color=a6e3a1)
 
 ---
 

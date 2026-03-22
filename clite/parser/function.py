@@ -1,5 +1,6 @@
 import inspect
-from typing import TYPE_CHECKING, Annotated, Callable, TypeVar, get_args, get_origin
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Annotated, TypeVar, get_args, get_origin
 
 from clite._types import Any, Empty, Mapping
 from clite._typing import ParamSpec

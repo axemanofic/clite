@@ -1,5 +1,6 @@
 import sys
-from typing import Any, Callable, Optional, TypeVar
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 from ._types import Sequence
 from ._typing import ParamSpec
@@ -24,8 +25,8 @@ class Command:
 
     def __init__(
         self,
-        name: Optional[str],
-        description: Optional[str],
+        name: str | None,
+        description: str | None,
         func: Callable[..., T],
         *,
         is_root: bool = False,
@@ -51,9 +52,9 @@ class Clite:
 
     def __init__(
         self,
-        name: Optional[str] = None,
+        name: str | None = None,
         *,
-        description: Optional[str] = None,
+        description: str | None = None,
     ) -> None:
         self.name = "clite" if name is None else name.lower()
         self.description = description
@@ -61,9 +62,9 @@ class Clite:
 
     def command(
         self,
-        name: Optional[str] = None,
+        name: str | None = None,
         *,
-        description: Optional[str] = None,
+        description: str | None = None,
     ) -> Callable[[Callable[P, T]], Callable[P, None]]:
         """Return wrapper function.
 
@@ -88,9 +89,9 @@ class Clite:
 
     def root(
         self,
-        name: Optional[str] = None,
+        name: str | None = None,
         *,
-        description: Optional[str] = None,
+        description: str | None = None,
     ) -> Callable[[Callable[P, T]], Callable[P, None]]:
         """Return wrapper function.
 

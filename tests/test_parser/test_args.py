@@ -1,6 +1,6 @@
 import pytest
 
-from clite.cliparser import parse_command_line
+from clite.parser.arguments import parse_argv
 
 
 @pytest.mark.parametrize(
@@ -11,6 +11,12 @@ from clite.cliparser import parse_command_line
     ],
 )
 def test_parse_args(argv: list[str], expected: tuple[str]) -> None:
-    args, flags = parse_command_line(argv)
+    arguments = parse_argv(argv)
 
-    assert args == expected
+    result_args = []
+    for arg in arguments:
+        if arg.is_optional:
+            continue
+        result_args.append(arg.value)
+
+    assert tuple(result_args) == expected

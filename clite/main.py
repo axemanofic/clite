@@ -1,10 +1,15 @@
 import sys
 from typing import Any, Callable, Optional, TypeVar
 
+from ._types import Sequence
 from ._typing import ParamSpec
-from .cliparser import analyse_signature, get_command, parse_command_line, parse_command_line2
-from .errors import CliteError, MissingRequiredParameterError, RootCommandNotFoundError
+from .converter import convert_params_value
+from .errors import CliteError, RootCommandNotFoundError
 from .helper import Helper
+from .mapping import mapping_param_and_meta
+from .parser.arguments import parse_argv
+from .parser.commands import get_command
+from .parser.function import analyse_signature
 from .utils import echo
 
 P = ParamSpec("P")
@@ -44,7 +49,12 @@ class Clite:
     Class containing all the commands
     """
 
-    def __init__(self, name: Optional[str] = None, *, description: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        name: Optional[str] = None,
+        *,
+        description: Optional[str] = None,
+    ) -> None:
         self.name = "clite" if name is None else name.lower()
         self.description = description
         self.commands: dict[str, Command] = {}
@@ -103,7 +113,7 @@ class Clite:
 
         return wrapper
 
-    def _run(self, argv: list[str]) -> None:
+    def _run(self, argv: Sequence[str]) -> None:
         """Run the command.
 
         ALl magic happens here
@@ -121,35 +131,26 @@ class Clite:
             h.create_help_clite(self)
             return
 
+        arguments = parse_argv(argv)
+
+        for arg in arguments:
+            if arg.name == "help":
+                h = Helper()
+                h.create_help_command(cmd)
+                return
+
         params = analyse_signature(cmd.func)
 
-        arguments = parse_command_line2(argv)
+        params = mapping_param_and_meta(params, arguments)
+        params = convert_params_value(params)
 
-        print(params, arguments)
-
-        args: list[Any, ...] = []
+        args: list[Any] = []
         kwargs: dict[str, Any] = {}
-
-        for p in params:
-            while len(arguments) > 0:
-                a = arguments.popleft()
-                p.value = a.value
-                v = p.covert()
-                if p.is_optional:
-                    kwargs[p.param_name] = v
-                else:
-                    args.append(v)
-                break
-            if p.value == "":
-                raise MissingRequiredParameterError(p.param_name)
+        for _, p in params.items():
             if p.is_optional:
-                kwargs[p.param_name] = p.covert()
-        # if "help" in flags:
-        #     h = Helper()
-        #     h.create_help_command(cmd)
-        #     return
-
-        print(args, kwargs)
+                kwargs[p.name] = p.value
+            else:
+                args.append(p.value)
 
         cmd.func(*args, **kwargs)
 

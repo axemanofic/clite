@@ -1,17 +1,15 @@
-from typing import Any
-
+from ._types import Any
 from .errors import BadParameterError
 
 
 class ParamType:
     """Base class for parameter types."""
 
-    def __init__(self, *, param_name: str, value: str, is_optional: bool) -> None:
+    def __init__(self, *, param_name: str, value: Any | None) -> None:
         self.param_name = param_name
         self.value = value
-        self.is_optional = is_optional
 
-    def covert(self) -> Any:  # noqa: ANN401
+    def convert(self) -> Any:
         """Convert the value to the desired type."""
         raise NotImplementedError
 
@@ -30,7 +28,7 @@ class IntegerType(ParamType):
         """Return the type of the parameter."""
         return f"INTEGER({self.param_name}:{self.value})"
 
-    def covert(self) -> int:
+    def convert(self) -> int:
         """Convert the value to an integer."""
         try:
             return int(self.value)
@@ -48,7 +46,7 @@ class StringType(ParamType):
         """Return the type of the parameter."""
         return f"STRING({self.param_name}:{self.value})"
 
-    def covert(self) -> str:
+    def convert(self) -> str:
         """Convert the value to a string."""
         return self.value
 
@@ -60,7 +58,7 @@ class BoolType(ParamType):
         """Return the type of the parameter."""
         return f"BOOLEAN({self.param_name}:{self.value})"
 
-    def covert(self) -> bool:
+    def convert(self) -> bool:
         """Convert the value to a boolean."""
         value = self.value.lower()
         if value in ("1", "true", "t", "yes", "y", "on"):
@@ -77,22 +75,9 @@ class FloatType(ParamType):
         """Return the type of the parameter."""
         return f"FLOAT({self.param_name}:{self.value})"
 
-    def covert(self) -> float:
+    def convert(self) -> float:
         """Convert the value to a float."""
         try:
             return float(self.value)
         except ValueError as exc:
             raise BadParameterError(param_hint=self.param_name, message=self.value) from exc
-
-
-def covert_type(*, param_name: str, value: str, is_optional: bool, annotation: type) -> ParamType:
-    """Convert the value to the desired type."""
-    if annotation is int:
-        return IntegerType(param_name=param_name, value=value, is_optional=is_optional)
-    if annotation is bool:
-        return BoolType(param_name=param_name, value=value, is_optional=is_optional)
-    if annotation is float:
-        return FloatType(param_name=param_name, value=value, is_optional=is_optional)
-    if annotation is str:
-        return StringType(param_name=param_name, value=value, is_optional=is_optional)
-    return StringType(param_name=param_name, value=value, is_optional=is_optional)

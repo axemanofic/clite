@@ -5,6 +5,7 @@
     <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/clite?pypiBaseUrl=https%3A%2F%2Fpypi.org&style=for-the-badge&color=dc8a78">
     <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=dd7878">
     <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=ea76cb">
+    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/axemanofic/clite/test.yml?branch=master&event=push&style=for-the-badge&color=a6e3a1">
 </div>
 
 ---

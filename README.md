@@ -5,7 +5,7 @@
 </div>
 
 <div align="center">
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=89dceb)]()
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=89dceb)](https://pypistats.org/packages/clite)
 [![PyPI - Version](https://img.shields.io/pypi/v/clite?style=for-the-badge&color=b4befe)](https://pypi.org/project/clite/)
 [![PyPI - Status](https://img.shields.io/pypi/status/clite?style=for-the-badge&color=89dceb)](https://pypi.org/project/clite/#data)
 [![PyPI - License](https://img.shields.io/pypi/l/clite?style=for-the-badge&color=74c7ec)](https://pypi.org/project/clite/#data)

@@ -4,6 +4,7 @@
     <p>The name is inspired by the <a href="https://www.sqlite.org/">SQLite</a></p>
 </div>
 
+<div align="center">
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=89dceb)
 ![PyPI - Version](https://img.shields.io/pypi/v/clite?style=for-the-badge&color=b4befe)
 ![PyPI - Status](https://img.shields.io/pypi/status/clite?style=for-the-badge&color=89dceb)
@@ -11,6 +12,7 @@
 ![PyPI - Types](https://img.shields.io/pypi/types/clite?style=for-the-badge&color=94e2d5)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=f9e2af)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/axemanofic/clite/test.yml?branch=master&event=push&style=for-the-badge&color=a6e3a1)
+</div>
 
 ---
 

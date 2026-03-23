@@ -26,3 +26,13 @@ tasks:
     cmds:
       - uv run pytest ./tests/ --cov
       - uv run coverage html
+
+  nox:
+    cmds:
+      - uv run nox
+
+  all-checks:
+    cmds:
+      - task: lint
+      - task: format
+      - task: test

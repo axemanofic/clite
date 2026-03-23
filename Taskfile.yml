@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+tasks:
+  lint:
+    cmds:
+      - uv run ruff check . --fix
+      - uv run mypy .
+
+  format:
+    cmds:
+      - uv run ruff format .
+      - uv run black .
+      - uv run isort .
+
+  docs:
+    cmds:
+      - uv run mkdocs serve
+
+  test:
+    cmds:
+      - uv run pytest ./tests/
+
+  coverage:
+    cmds:
+      - uv run pytest ./tests/ --cov
+      - uv run coverage html

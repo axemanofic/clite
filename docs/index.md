@@ -6,15 +6,27 @@
 </div>
 
 <div align="center">
-
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=89dceb)](https://pypistats.org/packages/clite)
-[![PyPI - Version](https://img.shields.io/pypi/v/clite?style=for-the-badge&color=b4befe)](https://pypi.org/project/clite/)
-[![PyPI - Status](https://img.shields.io/pypi/status/clite?style=for-the-badge&color=89dceb)](https://pypi.org/project/clite/#data)
-[![PyPI - License](https://img.shields.io/pypi/l/clite?style=for-the-badge&color=74c7ec)](https://pypi.org/project/clite/#data)
-[![PyPI - Types](https://img.shields.io/pypi/types/clite?style=for-the-badge&color=94e2d5)](https://pypi.org/project/clite/#data)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=f9e2af)](https://pypi.org/project/clite/)
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/axemanofic/clite/test.yml?branch=master&event=push&style=for-the-badge&color=a6e3a1)](https://github.com/axemanofic/clite/actions/workflows/test.yml)
-
+    <a href="https://pypistats.org/packages/clite" target="_blank">
+        <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/clite?style=for-the-badge&color=89dceb">
+    </a>
+    <a href="https://pypi.org/project/clite" target="_blank">
+        <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/clite?style=for-the-badge&color=b4befe">
+    </a>
+    <a href="https://pypi.org/project/clite/#data" target="_blank">
+        <img alt="PyPI - Status" src="https://img.shields.io/pypi/status/clite?style=for-the-badge&color=89dceb">
+    </a>
+    <a href="https://pypi.org/project/clite/#data" target="_blank">
+        <img alt="PyPI - License" src="https://img.shields.io/pypi/l/clite?style=for-the-badge&color=74c7ec">
+    </a>
+    <a href="https://pypi.org/project/clite/#data" target="_blank">
+        <img alt="PyPI - Types" src="https://img.shields.io/pypi/types/clite?style=for-the-badge&color=94e2d5">
+    </a>
+    <a href="https://pypi.org/project/clite" target="_blank">
+        <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/clite?style=for-the-badge&color=f9e2af">
+    </a>
+    <a href="https://github.com/axemanofic/clite/actions/workflows/test.yml" target="_blank">
+        <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/axemanofic/clite/test.yml?branch=master&event=push&style=for-the-badge&color=a6e3a1">
+    </a>
 </div>
 
 ---

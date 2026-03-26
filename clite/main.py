@@ -2,46 +2,19 @@ import sys
 from collections.abc import Callable
 from typing import Any, TypeVar
 
-from ._types import Sequence
-from ._typing import ParamSpec
-from .converter import convert_params_value
-from .errors import CliteError, RootCommandNotFoundError
-from .helper import Helper
-from .mapping import mapping_param_and_meta
-from .parser.arguments import parse_argv
-from .parser.commands import get_command
-from .parser.function import analyse_signature
-from .utils import echo
+from clite._types import Sequence
+from clite._typing import ParamSpec
+from clite.converter import convert_params_value
+from clite.errors import CliteError
+from clite.helper import Helper
+from clite.mapping import mapping_param_and_meta
+from clite.parser.arguments import parse_argv
+from clite.parser.commands import Command, get_command
+from clite.parser.function import analyse_signature
+from clite.utils import echo
 
 P = ParamSpec("P")
 T = TypeVar("T")
-
-
-class Command:
-    """Command class.
-
-    Class describing the command to be executed
-    """
-
-    def __init__(
-        self,
-        name: str | None,
-        description: str | None,
-        func: Callable[..., T],
-        *,
-        is_root: bool = False,
-    ) -> None:
-        self.name: str = func.__name__ if name is None else name
-        self.description = description
-        self.func = func
-        self.is_root = is_root
-
-    def __repr__(self) -> str:
-        """Return the name of the command.
-
-        :return: name of the command
-        """
-        return self.name.lower()
 
 
 class Clite:
@@ -109,7 +82,7 @@ class Clite:
             :return: wrapped function
             """
             cmd = Command(name, description, func, is_root=True)
-            self.commands[f"{self}:{cmd}"] = cmd
+            self.commands[f"{self}"] = cmd
             return func
 
         return wrapper
@@ -122,25 +95,17 @@ class Clite:
         :param argv: list of arguments
         :return: exit code
         """
-        if not argv:
-            argv = ["root"]
-
-        try:
-            cmd, argv = get_command(self, argv)
-        except RootCommandNotFoundError:
-            h = Helper()
-            h.create_help_clite(self)
-            return
-
         arguments = parse_argv(argv)
+
+        cmd, arguments = get_command(self, arguments)
+
+        params = analyse_signature(cmd.func)
 
         for arg in arguments:
             if arg.name == "help":
                 h = Helper()
-                h.create_help_command(cmd)
+                h.create_help_command(params)
                 return
-
-        params = analyse_signature(cmd.func)
 
         params = mapping_param_and_meta(params, arguments)
         params = convert_params_value(params)

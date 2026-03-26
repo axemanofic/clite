@@ -1,16 +1,21 @@
-from typing import TYPE_CHECKING, get_type_hints
+from typing import TYPE_CHECKING
 
-from .converter import covert_type
-from .utils import echo
+from clite.utils import echo
 
 if TYPE_CHECKING:
-    from .main import Clite, Command
+    from clite._types import Sequence
+    from clite.main import Clite, Command
+    from clite.parser.function import ParameterInfo
 
 
 class Helper:
     """Helper class."""
 
-    def create_help_command(self, cmd: "Command") -> None:
+    def create_help_command(
+        self,
+        cmd: "Command",
+        params: "Sequence[ParameterInfo]",
+    ) -> None:
         """Create help for command.
 
         :param cmd: command
@@ -18,12 +23,8 @@ class Helper:
         """
         echo(f"{cmd.name} - {cmd.description}")
         echo(f"Usage: {cmd.name} [OPTIONS]")
-        annotations = get_type_hints(cmd.func)
-        for param in annotations:
-            if param == "return":
-                continue
-            _param = covert_type(param_name=param, value="", annotation=annotations[param])
-            echo(f"{param} [{_param}]")
+        for param in params:
+            echo(f"{param.name} [{param.annotation}]")
 
     def create_help_clite(self, instance: "Clite") -> None:
         """Create help for clite.

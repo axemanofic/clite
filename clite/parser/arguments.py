@@ -19,7 +19,7 @@ class ArgumentMeta:
 
     def __repr__(self) -> str:
         """Return the type of the parameter."""
-        return f"ArgumentMeta({self.name}={self.value})"
+        return f"ArgumentMeta({self.name}={self.value}, is_optional={self.is_optional})"
 
 
 def replace_quotes(value: str) -> str:

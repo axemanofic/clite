@@ -4,7 +4,8 @@ from clite.utils import echo
 
 if TYPE_CHECKING:
     from clite._types import Sequence
-    from clite.main import Clite, Command
+    from clite.main import Clite
+    from clite.parser.commands import Command
     from clite.parser.function import ParameterInfo
 
 

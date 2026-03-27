@@ -5,7 +5,6 @@ from collections.abc import MutableSequence as MutableSequence
 from collections.abc import Sequence as Sequence
 from inspect import Parameter as Parameter
 from typing import Any as Any
-from typing import Deque as Deque
 from typing import ParamSpec as ParamSpec
 from typing import TypeAlias as TypeAlias
 from typing import TypeVar as TypeVar
@@ -16,7 +15,6 @@ Empty = Parameter.empty
 __all__ = [
     "Any",
     "Callable",
-    "Deque",
     "Empty",
     "Mapping",
     "MutableMapping",

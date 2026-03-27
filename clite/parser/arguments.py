@@ -1,6 +1,6 @@
 from collections import deque
 
-from clite._types import Any, MutableSequence, Sequence
+from clite._types import Any, Empty, MutableSequence, Sequence
 
 
 class ArgumentMeta:
@@ -10,7 +10,7 @@ class ArgumentMeta:
         self,
         *,
         name: str,
-        value: str | None,
+        value: Any,
         is_optional: bool = False,
     ) -> None:
         self.name = name
@@ -22,7 +22,7 @@ class ArgumentMeta:
         return f"ArgumentMeta({self.name}={self.value}, is_optional={self.is_optional})"
 
 
-def replace_quotes(value: str) -> str:
+def replace_quotes(value: Any) -> Any:
     """Replace quotes in the value."""
     if value.startswith('"') and value.endswith('"'):
         value = value[1:-1]
@@ -41,9 +41,9 @@ def parse_opt(*, opt: str, is_short: bool = False) -> Sequence[ArgumentMeta]:
         name, value = opt.split("=", maxsplit=1)
     except ValueError:
         name = opt
-        value = None
+        value = Empty
 
-    if value is not None:
+    if value != Empty:
         value = replace_quotes(value)
 
     if is_short and len(name) > 1:
@@ -91,7 +91,7 @@ def parse_argv(argv: Sequence[str]) -> MutableSequence[ArgumentMeta]:
             opts = parse_opt(opt=arg[1:], is_short=True)
             argv_pipe.extend(opts)
             continue
-        if len(argv_pipe) > 0 and argv_pipe[-1].is_optional and argv_pipe[-1].value is None:
+        if len(argv_pipe) > 0 and argv_pipe[-1].is_optional and argv_pipe[-1].value == Empty:
             arg = replace_quotes(arg)
             argv_pipe[-1].value = arg
             continue

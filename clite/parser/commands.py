@@ -1,8 +1,8 @@
 from collections import deque
 from typing import TYPE_CHECKING
 
-from clite._types import Callable, Deque, ParamSpec, Sequence, TypeVar
-from clite.errors import CommandNotFoundError, RootCommandNotFoundError
+from clite._types import Callable, ParamSpec, Sequence, TypeVar
+from clite.errors import CommandNotFoundError
 from clite.parser.arguments import ArgumentMeta
 
 if TYPE_CHECKING:
@@ -40,57 +40,59 @@ class Command:
         return self.name.lower()
 
 
+def parse_command_argv(
+    clite_instance: "Clite",
+    cmds: deque[ArgumentMeta],
+) -> tuple[Command | None, deque[ArgumentMeta]]:
+    """Parse the command line arguments.
+
+    :param clite_instance: clite instance
+    :param cmds: list of arguments
+    :return: command and list of arguments
+    """
+    cmd: Command | None = None
+
+    orig_cmds = cmds.copy()
+    while len(orig_cmds) > 0:
+        cmd_key = f"{clite_instance}:{'.'.join([c.value for c in orig_cmds])}"
+        cmd = clite_instance.commands.get(cmd_key)
+
+        if cmd is not None:
+            break
+
+        orig_cmds.pop()
+
+    return cmd, orig_cmds
+
+
 def get_command(
     clite_instance: "Clite",
     argv: Sequence[ArgumentMeta],
-) -> tuple[Command | None, Deque[ArgumentMeta]]:
+) -> tuple[Command, deque[ArgumentMeta]]:
     """Get the command from the dictionary of commands.
 
     :param clite_instance: clite instance
     :param argv: list of arguments
     :return: command and list of arguments
     """
-
-    cmd: Command | None = None
-
-    cmds: deque[ArgumentMeta] = deque([])
+    cmds: deque[ArgumentMeta] = deque()
 
     for arg in argv:
         if arg.is_optional:
-            continue
-        if arg.name in ("help"):
+            break
+        if arg.name in ("help", "h"):
             break
         cmds.append(arg)
 
-    print(f"cmds: {cmds}")
+    cmd, args = parse_command_argv(clite_instance, cmds)
 
-    while len(cmds) > 0:
-        cmd_key = f"{clite_instance}:{'.'.join([c.value for c in cmds])}"
-        cmd = clite_instance.commands.get(cmd_key)
-
-        if cmd is not None:
-            break
-
-        cmds.pop()
-
-    print(f"cmds: {cmds}")
-
-    if len(cmds) == 0:
+    if cmd is None:
         cmd_key = f"{clite_instance}"
         cmd = clite_instance.commands.get(cmd_key)
 
-    if len(cmds) == 0 and cmd is None:
-        raise RootCommandNotFoundError
-
     if cmd is None:
-        raise CommandNotFoundError(" ".join(cmds))
+        raise CommandNotFoundError(" ".join([c.value for c in cmds]))
 
-    if len(cmds) > 0:
-        idx = argv.index(cmds[-1])
-        idx = idx + 1
-    else:
-        idx = 0
+    argv = deque(filter(lambda x: x not in args, argv))
 
-    result = (cmd, deque(argv[idx:]))
-    print(f"result: {result}")
-    return result
+    return cmd, argv

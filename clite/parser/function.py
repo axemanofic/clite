@@ -36,7 +36,15 @@ class ParameterInfo:
 
         :return: type of the parameter
         """
-        return f"ParameterInfo(name={self.name}, value={self.value}, annotation={self.annotation}, is_optional={self.is_optional}, short_name={self.short_name})"
+        return f"""
+        ParameterInfo(
+            name={self.name},
+            value={self.value},
+            annotation={self.annotation},
+            is_optional={self.is_optional},
+            short_name={self.short_name}
+        )"
+        """
 
     def __str__(self) -> str:
         """Return the type of the parameter.

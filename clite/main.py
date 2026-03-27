@@ -6,7 +6,6 @@ from clite._types import Sequence
 from clite._typing import ParamSpec
 from clite.converter import convert_params_value
 from clite.errors import CliteError
-from clite.helper import Helper
 from clite.mapping import mapping_param_and_meta
 from clite.parser.arguments import parse_argv
 from clite.parser.commands import Command, get_command
@@ -100,12 +99,6 @@ class Clite:
         cmd, arguments = get_command(self, arguments)
 
         params = analyse_signature(cmd.func)
-
-        for arg in arguments:
-            if arg.name == "help":
-                h = Helper()
-                h.create_help_command(params)
-                return
 
         params = mapping_param_and_meta(params, arguments)
         params = convert_params_value(params)

@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from ._types import Any, Empty, Mapping
+from ._types import Empty, Mapping
 from .errors import MissingRequiredArgumentError
 from .params_types import BoolType, FloatType, IntegerType, ParamType, StringType
 
@@ -15,7 +15,7 @@ _PARAM_TYPES = {
 }
 
 
-def covert_type(*, param_name: str, value: Any, annotation: type) -> ParamType:
+def covert_type(*, param_name: str, value: str, annotation: type) -> ParamType:
     """Convert the value to the desired type."""
     param: type[ParamType] | None = _PARAM_TYPES.get(annotation)
     if param is None:
@@ -30,11 +30,9 @@ def convert_params_value(
     for _, p in params.items():
         if p.value == Empty:
             raise MissingRequiredArgumentError(p.name)
-
-    for _, p in params.items():
         _type = covert_type(
             param_name=p.name,
-            value=p.value,
+            value=p.value.__str__(),
             annotation=p.annotation,
         )
         p.value = _type.convert()

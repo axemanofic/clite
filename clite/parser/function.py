@@ -36,7 +36,15 @@ class ParameterInfo:
 
         :return: type of the parameter
         """
-        return f"ParameterInfo(name={self.name}, value={self.value}, annotation={self.annotation})"
+        return f"""
+        ParameterInfo(
+            name={self.name},
+            value={self.value},
+            annotation={self.annotation},
+            is_optional={self.is_optional},
+            short_name={self.short_name}
+        )"
+        """
 
     def __str__(self) -> str:
         """Return the type of the parameter.
@@ -116,7 +124,7 @@ def analyse_signature(
         if origin is Annotated:
             annotation = get_args(annotation)[0]
 
-        if value.default is Empty:
+        if value.default == Empty:
             bound_arguments[param_name] = ArgumentInfo(
                 name=param_name,
                 value=value.default,

@@ -1,7 +1,6 @@
 from collections import deque
-from typing import Any
 
-from ._types import Empty, Mapping, MutableSequence, Sequence
+from ._types import Any, Empty, Mapping, MutableSequence
 from .errors import NoSuchOptionError, UnexpectedExtraArgumentsError
 from .parser.arguments import ArgumentMeta
 from .parser.function import ParameterInfo
@@ -9,10 +8,9 @@ from .parser.function import ParameterInfo
 
 def mapping_param_and_meta(
     params: Mapping[str, ParameterInfo],
-    args: Sequence[ArgumentMeta],
+    arguments: deque[ArgumentMeta],
 ) -> Mapping[str, ParameterInfo]:
     """Map the parameters info to the arguments meta."""
-    arguments = deque(args)
     extra_args: MutableSequence[Any] = []
 
     while len(arguments) > 0:
@@ -30,6 +28,9 @@ def mapping_param_and_meta(
                 p.value = arg.value
                 break
 
+        if len(params.items()) == 0:
+            extra_args.append(arg)
+            continue
         if not arg.is_optional and p.value != arg.value:
             extra_args.append(arg)
             continue

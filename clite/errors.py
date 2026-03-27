@@ -21,8 +21,8 @@ class RootCommandNotFoundError(CliteError):
 
     exit_code = ExitCode.SHELL
 
-    def __init__(self, message: str) -> None:
-        super().__init__(f"Root command not found: {message}")
+    def __init__(self) -> None:
+        super().__init__("Root command not found")
 
 
 class CommandNotFoundError(CliteError):

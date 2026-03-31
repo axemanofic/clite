@@ -166,3 +166,7 @@ cython_debug/
 .playground/
 mise.local.toml
 .sandbox/
+
+# AI
+.opencode/
+AGENTS.md

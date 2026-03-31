@@ -2,7 +2,7 @@ from collections import deque
 from typing import TYPE_CHECKING
 
 from clite._types import Callable, ParamSpec, Sequence, TypeVar
-from clite.errors import CommandNotFoundError
+from clite.errors import CommandNotFoundError, RootCommandNotFoundError
 from clite.parser.arguments import ArgumentMeta
 
 if TYPE_CHECKING:
@@ -89,6 +89,8 @@ def get_command(
     if cmd is None:
         cmd_key = f"{clite_instance}"
         cmd = clite_instance.commands.get(cmd_key)
+        if len(cmds) == 0 and cmd is None:
+            raise RootCommandNotFoundError
 
     if cmd is None:
         raise CommandNotFoundError(" ".join([c.value for c in cmds]))

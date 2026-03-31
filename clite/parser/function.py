@@ -1,5 +1,6 @@
 import inspect
 from collections.abc import Callable
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Annotated, TypeVar, get_args, get_origin
 
 from clite._types import Any, Empty, Mapping
@@ -13,45 +14,15 @@ P = ParamSpec("P")
 T = TypeVar("T")
 
 
+@dataclass
 class ParameterInfo:
     """Base class for parameter types."""
 
-    def __init__(
-        self,
-        *,
-        name: str,
-        value: Any | None,
-        annotation: Any,
-        is_optional: bool = False,
-        short_name: str | None = None,
-    ) -> None:
-        self.name = name
-        self.value = value
-        self.annotation = annotation
-        self.is_optional = is_optional
-        self.short_name = short_name
-
-    def __repr__(self) -> str:
-        """Return the type of the parameter.
-
-        :return: type of the parameter
-        """
-        return f"""
-        ParameterInfo(
-            name={self.name},
-            value={self.value},
-            annotation={self.annotation},
-            is_optional={self.is_optional},
-            short_name={self.short_name}
-        )"
-        """
-
-    def __str__(self) -> str:
-        """Return the type of the parameter.
-
-        :return: type of the parameter
-        """
-        return self.__repr__()
+    name: str
+    value: Any | None
+    annotation: Any
+    is_optional: bool = False
+    short_name: str | None = None
 
     def names(self) -> tuple[str, ...]:
         """Return the names of the parameter.

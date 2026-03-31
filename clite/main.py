@@ -6,11 +6,12 @@ from clite._types import Sequence
 from clite._typing import ParamSpec
 from clite.converter import convert_params_value
 from clite.errors import CliteError
+from clite.helper import Helper
 from clite.mapping import mapping_param_and_meta
 from clite.parser.arguments import parse_argv
 from clite.parser.commands import Command, get_command
 from clite.parser.function import analyse_signature
-from clite.utils import echo
+from clite.utils import echo, split_args_kwargs
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -31,6 +32,7 @@ class Clite:
         self.name = "clite" if name is None else name.lower()
         self.description = description
         self.commands: dict[str, Command] = {}
+        self.helper: Helper = Helper()
 
     def command(
         self,
@@ -97,19 +99,14 @@ class Clite:
         arguments = parse_argv(argv)
 
         cmd, arguments = get_command(self, arguments)
-
         params = analyse_signature(cmd.func)
+
+        self.helper.create_help_command(cmd, params)
+        return
 
         params = mapping_param_and_meta(params, arguments)
         params = convert_params_value(params)
-
-        args: list[Any] = []
-        kwargs: dict[str, Any] = {}
-        for _, p in params.items():
-            if p.is_optional:
-                kwargs[p.name] = p.value
-            else:
-                args.append(p.value)
+        args, kwargs = split_args_kwargs(params)
 
         cmd.func(*args, **kwargs)
 

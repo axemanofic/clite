@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from clite.utils import echo
 
 if TYPE_CHECKING:
-    from clite._types import Sequence
+    from clite._types import Mapping
     from clite.main import Clite
     from clite.parser.commands import Command
     from clite.parser.function import ParameterInfo
@@ -15,7 +15,7 @@ class Helper:
     def create_help_command(
         self,
         cmd: "Command",
-        params: "Sequence[ParameterInfo]",
+        params: "Mapping[str, ParameterInfo]",
     ) -> None:
         """Create help for command.
 
@@ -24,8 +24,12 @@ class Helper:
         """
         echo(f"{cmd.name} - {cmd.description}")
         echo(f"Usage: {cmd.name} [OPTIONS]")
-        for param in params:
-            echo(f"{param.name} [{param.annotation}]")
+        for _, param in params.items():
+            if param.is_optional:
+                if param.short_name:
+                    echo(f"{param.name}/{param.short_name} - {param.annotation} - {param.name}")
+                else:
+                    echo(f"{param.name} - {param.annotation} - {param.name}")
 
     def create_help_clite(self, instance: "Clite") -> None:
         """Create help for clite.

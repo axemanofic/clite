@@ -1,11 +1,16 @@
 import sys
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any, TypeVar
 
 from clite._types import Sequence
 from clite._typing import ParamSpec
 from clite.converter import convert_params_value
-from clite.errors import CliteError
+from clite.errors import (
+    CliteError,
+    CommandNotFoundError,
+    RootCommandNotFoundError,
+)
 from clite.helper import Helper
 from clite.mapping import mapping_param_and_meta
 from clite.parser.arguments import parse_argv
@@ -28,11 +33,15 @@ class Clite:
         name: str | None = None,
         *,
         description: str | None = None,
+        helper: Helper | None = None,
     ) -> None:
-        self.name = "clite" if name is None else name.lower()
+        self.name = Path(sys.argv[0]).name if name is None else name.lower()
         self.description = description
         self.commands: dict[str, Command] = {}
-        self.helper: Helper = Helper()
+        if helper is None:
+            self.helper = Helper()
+        else:
+            self.helper = helper
 
     def command(
         self,
@@ -98,11 +107,17 @@ class Clite:
         """
         arguments = parse_argv(argv)
 
-        cmd, arguments = get_command(self, arguments)
+        try:
+            cmd, arguments = get_command(self, arguments)
+        except (RootCommandNotFoundError, CommandNotFoundError):
+            self.helper.create_help_clite(self)
+            return
+
         params = analyse_signature(cmd.func)
 
-        self.helper.create_help_command(cmd, params)
-        return
+        if self.helper.is_show_help_message(args=arguments):
+            self.helper.create_help_command(self, cmd, params)
+            return
 
         params = mapping_param_and_meta(params, arguments)
         params = convert_params_value(params)

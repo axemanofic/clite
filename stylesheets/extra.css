@@ -1,0 +1,122 @@
+[data-md-color-scheme="catppuccin-latte"] {
+  /* Colors */
+  --peach: #fe640b;
+  --blue:  #1e66f5;
+  --mauve: #8839ef;
+  --green: #40a02b;
+  --sky:   #04a5e5;
+  --overlay-2: #7c7f93;
+  --yellow: #df8e1d;
+
+  color-scheme: light;
+
+  --md-primary-fg-color:                #1e1e2e;
+  --md-primary-bg-color:                #eff1f5;
+  --md-accent-fg-color:               var(--blue);
+  --md-accent-bg-color:                 #eff1f5;
+
+  /* Default color shades */
+  --md-default-fg-color:                #4c4f69;
+  --md-default-fg-color--light:         #4c4f69;
+  --md-default-fg-color--lighter:       #5c5f77;
+  --md-default-fg-color--lightest:      #6c6f85;
+  --md-default-bg-color:                #eff1f5;
+
+  /* Code color shades */
+  --md-code-fg-color:                   #4c4f69;
+  --md-code-bg-color:                   #ccd0da;
+
+  /* Code highlighting syntax color shades */
+  --md-code-hl-number-color:         var(--peach);
+  --md-code-hl-special-color:        var(--peach);
+  --md-code-hl-function-color:       var(--blue);
+  --md-code-hl-constant-color:       var(--peach);
+  --md-code-hl-keyword-color:        var(--mauve);
+  --md-code-hl-string-color:         var(--green);
+  --md-code-hl-name-color:             var(--md-code-fg-color);
+  --md-code-hl-operator-color:         var(--sky);
+  --md-code-hl-punctuation-color:      var(--overlay-2);
+  --md-code-hl-comment-color:          var(--overlay-2);
+  --md-code-hl-generic-color:          var(--yellow);
+  --md-code-hl-variable-color:         blue;
+
+  /* Typeset color shades */
+  --md-typeset-color:                var(--md-default-fg-color);
+
+  /* Typeset `a` color shades */
+  --md-typeset-a-color:              var(--blue);
+
+  /* Admonition color shades */
+  --md-admonition-fg-color:            var(--md-default-fg-color);
+  --md-admonition-bg-color:            var(--md-default-bg-color);
+
+  /* Warning color shades */
+  --md-warning-fg-color:              #4c4f69;
+  --md-warning-bg-color:              var(--yellow);
+
+  /* Footer color shades */
+  --md-footer-fg-color:                #cdd6f4;
+  --md-footer-bg-color:                #11111b;
+}
+
+[data-md-color-scheme="catppuccin-mocha"] {
+  /* Colors */
+  --peach: #fab387;
+  --blue:  #89b4fa;
+  --mauve: #cba6f7;
+  --green: #a6e3a1;
+  --sky:   #89dceb;
+  --overlay-2: #9399b2;
+  --yellow: #f9e2af;
+
+  color-scheme: dark;
+
+  --md-primary-fg-color:               #1e1e2e;
+  --md-primary-bg-color:               #eff1f5;
+  --md-accent-fg-color:                var(--blue);
+  --md-accent-bg-color:                #eff1f5;
+
+  /* Default color shades */
+  --md-default-fg-color:               #cdd6f4;
+  --md-default-fg-color--light:        #cdd6f4;
+  --md-default-fg-color--lighter:      #bac2de;
+  --md-default-fg-color--lightest:      #a6adc8;
+  --md-default-bg-color:               #1e1e2e;
+
+
+  /* Code color shades */
+  --md-code-fg-color:                  #cdd6f4;
+  --md-code-bg-color:                  #181825;
+
+  /* Code highlighting syntax color shades */
+  --md-code-hl-number-color:           var(--peach);
+  --md-code-hl-special-color:          var(--peach);
+  --md-code-hl-function-color:         var(--blue);
+  --md-code-hl-constant-color:         var(--peach);
+  --md-code-hl-keyword-color:          var(--mauve);
+  --md-code-hl-string-color:           var(--green);
+  --md-code-hl-name-color:             var(--md-code-fg-color);
+  --md-code-hl-operator-color:         var(--sky);
+  --md-code-hl-punctuation-color:      var(--overlay-2);
+  --md-code-hl-comment-color:          var(--overlay-2);
+  --md-code-hl-generic-color:          var(--yellow);
+  --md-code-hl-variable-color:         green;
+
+  /* Typeset color shades */
+  --md-typeset-color:                var(--md-default-fg-color);
+
+  /* Typeset `a` color shades */
+  --md-typeset-a-color:              var(--blue);
+
+  /* Typeset `table` color shades */
+  --md-typeset-table-color:            #cdd6f4;
+  --md-typeset-table-color--light:     #181825;
+
+  /* Admonition color shades */
+  --md-admonition-fg-color:            var(--md-default-fg-color);
+  --md-admonition-bg-color:            var(--md-default-bg-color);
+
+  /* Warning color shades */
+  --md-warning-fg-color:              #4c4f69;
+  --md-warning-bg-color:              var(--yellow);
+}
